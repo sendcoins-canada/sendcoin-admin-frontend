@@ -55,6 +55,8 @@ export default function Mail() {
   const [recipientSearch, setRecipientSearch] = useState('');
   const [selectedRecipients, setSelectedRecipients] = useState<RecipientOption[]>([]);
 
+  const [confirmCampaign, setConfirmCampaign] = useState<'unverified' | 'inactive' | null>(null);
+
   const { hasAnyPermission } = usePermissions();
   const canSendEmail = hasAnyPermission(['MANAGE_ADMINS', 'SEND_EMAILS']);
 
@@ -160,6 +162,34 @@ export default function Mail() {
     });
   };
 
+  const { data: campaignStats, isLoading: statsLoading } = useQuery({
+    queryKey: ['emails', 'campaigns', 'stats'],
+    queryFn: () => emailService.getCampaignStats(),
+    enabled: canSendEmail,
+  });
+
+  const unverifiedMutation = useMutation({
+    mutationFn: () => emailService.sendUnverifiedReminders(),
+    onSuccess: (res) => {
+      toast.success(`Sent reminders to ${res.count} unverified user${res.count !== 1 ? 's' : ''}`);
+      queryClient.invalidateQueries({ queryKey: ['emails', 'campaigns', 'stats'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.emails.all });
+      setConfirmCampaign(null);
+    },
+    onError: (e: Error) => { toast.error(e.message || 'Failed to send reminders'); setConfirmCampaign(null); },
+  });
+
+  const inactiveMutation = useMutation({
+    mutationFn: () => emailService.sendInactiveOutreach(),
+    onSuccess: (res) => {
+      toast.success(`Sent outreach to ${res.count} inactive user${res.count !== 1 ? 's' : ''}`);
+      queryClient.invalidateQueries({ queryKey: ['emails', 'campaigns', 'stats'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.emails.all });
+      setConfirmCampaign(null);
+    },
+    onError: (e: Error) => { toast.error(e.message || 'Failed to send outreach'); setConfirmCampaign(null); },
+  });
+
   const sendMutation = useMutation({
     mutationFn: (payload: SendEmailPayload) => emailService.send(payload),
     onSuccess: (res) => {
@@ -251,6 +281,82 @@ export default function Mail() {
 
   return (
     <DashboardLayout title="Mail">
+      {/* Campaigns */}
+      {canSendEmail && (
+        <div className="mb-8">
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Automated Campaigns</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Unverified reminder */}
+            <div className="rounded-xl border border-gray-100 bg-white shadow-sm p-5 flex flex-col gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold text-gray-900">Unverified account reminder</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Send a one-click reminder to every user who signed up but hasn't verified their account yet.
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full bg-yellow-50 text-yellow-700 text-xs font-semibold px-2.5 py-1">
+                  {statsLoading ? '…' : `${campaignStats?.unverified ?? 0} users`}
+                </span>
+              </div>
+              {confirmCampaign === 'unverified' ? (
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-sm text-gray-600">Send to all {campaignStats?.unverified} unverified users?</span>
+                  <button
+                    onClick={() => unverifiedMutation.mutate()}
+                    disabled={unverifiedMutation.isPending}
+                    className="px-3 py-1.5 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium disabled:opacity-50"
+                  >{unverifiedMutation.isPending ? 'Sending…' : 'Confirm'}</button>
+                  <button onClick={() => setConfirmCampaign(null)} className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm text-gray-600 hover:bg-gray-50">Cancel</button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmCampaign('unverified')}
+                  disabled={!campaignStats?.unverified}
+                  className="self-start px-4 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Send reminders
+                </button>
+              )}
+            </div>
+
+            {/* Inactive outreach */}
+            <div className="rounded-xl border border-gray-100 bg-white shadow-sm p-5 flex flex-col gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold text-gray-900">Inactive user outreach</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Nudge users who have a wallet but have never made a transaction — help them get started.
+                  </p>
+                </div>
+                <span className="shrink-0 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1">
+                  {statsLoading ? '…' : `${campaignStats?.inactive ?? 0} users`}
+                </span>
+              </div>
+              {confirmCampaign === 'inactive' ? (
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-sm text-gray-600">Send to all {campaignStats?.inactive} inactive users?</span>
+                  <button
+                    onClick={() => inactiveMutation.mutate()}
+                    disabled={inactiveMutation.isPending}
+                    className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium disabled:opacity-50"
+                  >{inactiveMutation.isPending ? 'Sending…' : 'Confirm'}</button>
+                  <button onClick={() => setConfirmCampaign(null)} className="px-3 py-1.5 rounded-lg border border-gray-200 text-sm text-gray-600 hover:bg-gray-50">Cancel</button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setConfirmCampaign('inactive')}
+                  disabled={!campaignStats?.inactive}
+                  className="self-start px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+                >
+                  Send outreach
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Compose */}
       <div className="mb-8 rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden">
         <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50 flex items-center gap-2">

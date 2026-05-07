@@ -59,4 +59,16 @@ export const emailService = {
       return null;
     }
   },
+
+  getCampaignStats: async (): Promise<{ unverified: number; inactive: number }> => {
+    return api.get('/emails/campaigns/stats');
+  },
+
+  sendUnverifiedReminders: async (): Promise<{ sent: boolean; count: number; total: number }> => {
+    return api.post('/emails/campaigns/unverified', {});
+  },
+
+  sendInactiveOutreach: async (): Promise<{ sent: boolean; count: number; total: number }> => {
+    return api.post('/emails/campaigns/inactive', {});
+  },
 };
