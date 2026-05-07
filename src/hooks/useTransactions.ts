@@ -110,8 +110,8 @@ export const useApproveTransaction = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, note }: { id: string; note?: string }) =>
-      transactionService.approveTransaction(id, note),
+    mutationFn: ({ id, note, txHash }: { id: string; note?: string; txHash?: string }) =>
+      transactionService.approveTransaction(id, note, txHash),
     onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.transactions.detail(id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.transactions.lists() });
@@ -137,6 +137,26 @@ export const useRejectTransaction = () => {
       queryClient.invalidateQueries({
         queryKey: [...queryKeys.transactions.all, 'pending-approvals'],
       });
+    },
+  });
+};
+
+/**
+ * Hook to update a transaction's blockchain hash
+ */
+export const useUpdateTxHash = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, txHash, type }: { id: string; txHash: string; type?: string }) =>
+      transactionService.updateTxHash(id, txHash, type),
+    onSuccess: (_, { id }) => {
+      toast.success('Transaction hash updated');
+      queryClient.invalidateQueries({ queryKey: queryKeys.transactions.detail(id) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.transactions.lists() });
+    },
+    onError: (err: Error) => {
+      toast.error(err?.message || 'Failed to update transaction hash');
     },
   });
 };

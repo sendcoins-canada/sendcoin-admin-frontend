@@ -88,6 +88,10 @@ const InfoRow = ({ icon, label, value }: InfoRowProps) => {
 export function ConversionDetailModal({ conversionId, open, onOpenChange }: ConversionDetailModalProps) {
   const [rejectReason, setRejectReason] = useState('');
   const [showRejectForm, setShowRejectForm] = useState(false);
+  const [txHash, setTxHash] = useState('');
+  const [showApproveForm, setShowApproveForm] = useState(false);
+  const [showEditHashForm, setShowEditHashForm] = useState(false);
+  const [editHash, setEditHash] = useState('');
   const queryClient = useQueryClient();
 
   // Fetch conversion details
@@ -99,10 +103,12 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
 
   const canVerifyConversion = useHasPermission('VERIFY_TRANSACTIONS');
   const approveMutation = useMutation({
-    mutationFn: () => conversionService.approve(conversionId),
+    mutationFn: (hash?: string) => conversionService.approve(conversionId, hash),
     onSuccess: () => {
       toast.success('Conversion approved successfully');
       queryClient.invalidateQueries({ queryKey: queryKeys.conversions.all });
+      setShowApproveForm(false);
+      setTxHash('');
       onOpenChange(false);
     },
     onError: (error: Error) => {
@@ -125,6 +131,20 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
     },
   });
 
+  // Update hash mutation (no MFA required — non-financial metadata update)
+  const updateHashMutation = useMutation({
+    mutationFn: (hash: string) => conversionService.updateHash(conversionId, hash),
+    onSuccess: () => {
+      toast.success('Transaction hash updated');
+      queryClient.invalidateQueries({ queryKey: ['conversions', 'detail', conversionId] });
+      setShowEditHashForm(false);
+      setEditHash('');
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || 'Failed to update hash');
+    },
+  });
+
   // MFA Protection for conversion approval
   const mfaApprove = useMfaProtectedAction({
     actionName: 'Approve Conversion',
@@ -143,13 +163,13 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
     },
   });
 
-  const handleApprove = async () => {
-    if (!confirm('Are you sure you want to approve this conversion?')) {
-      return;
-    }
+  const handleApprove = () => {
+    setShowApproveForm(true);
+  };
 
+  const handleConfirmApprove = async () => {
     await mfaApprove.executeWithMfa(async () => {
-      await approveMutation.mutateAsync();
+      await approveMutation.mutateAsync(txHash || undefined);
     });
   };
 
@@ -315,6 +335,15 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                     value={formatAmount(conversion.fee, conversion.fiatCurrency || conversion.currency)}
                   />
                 )}
+                {conversion.txHash && (
+                  <InfoRow
+                    icon={<TickCircle size="16" />}
+                    label="Transaction Hash"
+                    value={
+                      <span className="font-mono text-xs break-all">{conversion.txHash}</span>
+                    }
+                  />
+                )}
               </div>
 
               {/* Flag Reason */}
@@ -325,6 +354,43 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                 </div>
               )}
             </div>
+
+            {/* Approve Form */}
+            {showApproveForm && (
+              <div className="border-t border-gray-100 pt-4">
+                <label className="text-sm font-medium text-gray-700">
+                  Transaction ID / Hash{' '}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={txHash}
+                  onChange={(e) => setTxHash(e.target.value)}
+                  placeholder="Enter blockchain tx hash or payment reference..."
+                  className="mt-2 w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono"
+                />
+                <div className="flex gap-2 mt-3">
+                  <button
+                    onClick={() => { setShowApproveForm(false); setTxHash(''); }}
+                    className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleConfirmApprove}
+                    disabled={approveMutation.isPending}
+                    className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {approveMutation.isPending ? (
+                      <Refresh size="16" className="animate-spin" />
+                    ) : (
+                      <TickCircle size="16" />
+                    )}
+                    Confirm Approve
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Reject Form */}
             {showRejectForm && (
@@ -364,7 +430,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
             )}
 
             {/* Action Buttons */}
-            {isPending && !showRejectForm && (
+            {isPending && !showRejectForm && !showApproveForm && (
               <div className="flex gap-3 pt-4 border-t border-gray-100">
                 <button
                   onClick={() => setShowRejectForm(true)}
@@ -391,23 +457,67 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
               </div>
             )}
 
-            {/* Completed Status */}
-            {conversion.status === 'completed' && (
-              <div className="pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-3 rounded-lg">
-                  <TickCircle size="20" variant="Bold" />
-                  <span className="text-sm font-medium">This conversion has been completed</span>
+            {/* Completed / Failed Status + Edit Hash */}
+            {(conversion.status === 'completed' || conversion.status === 'failed') && (
+              <div className="pt-4 border-t border-gray-100 space-y-3">
+                <div className={`flex items-center gap-2 px-4 py-3 rounded-lg ${
+                  conversion.status === 'completed'
+                    ? 'text-green-600 bg-green-50'
+                    : 'text-red-600 bg-red-50'
+                }`}>
+                  {conversion.status === 'completed'
+                    ? <TickCircle size="20" variant="Bold" />
+                    : <CloseCircle size="20" variant="Bold" />
+                  }
+                  <span className="text-sm font-medium">
+                    This conversion has been {conversion.status}
+                  </span>
                 </div>
-              </div>
-            )}
 
-            {/* Failed Status */}
-            {conversion.status === 'failed' && (
-              <div className="pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-2 text-red-600 bg-red-50 px-4 py-3 rounded-lg">
-                  <CloseCircle size="20" variant="Bold" />
-                  <span className="text-sm font-medium">This conversion has failed</span>
-                </div>
+                {/* Edit Hash Form */}
+                {showEditHashForm ? (
+                  <div>
+                    <label className="text-sm font-medium text-gray-700">
+                      {conversion.txHash ? 'Update' : 'Add'} Transaction Hash
+                    </label>
+                    <input
+                      type="text"
+                      value={editHash}
+                      onChange={(e) => setEditHash(e.target.value)}
+                      placeholder="Enter blockchain tx hash or payment reference..."
+                      className="mt-2 w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
+                    />
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        onClick={() => { setShowEditHashForm(false); setEditHash(''); }}
+                        className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => updateHashMutation.mutate(editHash)}
+                        disabled={updateHashMutation.isPending || !editHash.trim()}
+                        className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        {updateHashMutation.isPending ? (
+                          <Refresh size="16" className="animate-spin" />
+                        ) : (
+                          <TickCircle size="16" />
+                        )}
+                        Save Hash
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  canVerifyConversion && (
+                    <button
+                      onClick={() => { setShowEditHashForm(true); setEditHash(conversion.txHash || ''); }}
+                      className="w-full px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100"
+                    >
+                      {conversion.txHash ? 'Edit Transaction Hash' : 'Add Transaction Hash'}
+                    </button>
+                  )
+                )}
               </div>
             )}
           </>

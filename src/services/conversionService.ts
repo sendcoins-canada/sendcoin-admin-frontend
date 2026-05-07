@@ -28,6 +28,7 @@ export interface Conversion {
   flagReason?: string;
   exchangeRate?: number;
   fee?: number;
+  txHash?: string;
   createdAt?: string;
   updatedAt?: string;
   completedAt?: string;
@@ -65,8 +66,8 @@ export const conversionService = {
   /**
    * Approve a conversion
    */
-  approve: async (id: string, notes?: string): Promise<void> => {
-    await api.post(`/conversions/${id}/approve`, { notes });
+  approve: async (id: string, txHash?: string, notes?: string): Promise<void> => {
+    await api.post(`/conversions/${id}/approve`, { txHash, notes });
   },
 
   /**
@@ -74,5 +75,12 @@ export const conversionService = {
    */
   reject: async (id: string, reason: string, notes?: string): Promise<void> => {
     await api.post(`/conversions/${id}/reject`, { reason, notes });
+  },
+
+  /**
+   * Update the blockchain transaction hash for a conversion
+   */
+  updateHash: async (id: string, txHash: string): Promise<void> => {
+    await api.patch(`/conversions/${id}/hash`, { txHash });
   },
 };

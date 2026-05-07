@@ -11,6 +11,7 @@ import {
   useUnflagTransaction,
   useApproveTransaction,
   useRejectTransaction,
+  useUpdateTxHash,
 } from '@/hooks/useTransactions';
 import {
   Refresh,
@@ -201,8 +202,12 @@ export function TransactionDetailModal({
   const [activeTab, setActiveTab] = useState<'details' | 'history'>('details');
   const [pendingAction, setPendingAction] = useState<{
     type: 'approve' | 'reject';
-    data: { note?: string; reason?: string };
+    data: { note?: string; reason?: string; txHash?: string };
   } | null>(null);
+  const [showApproveForm, setShowApproveForm] = useState(false);
+  const [approveTxHash, setApproveTxHash] = useState('');
+  const [showEditHashForm, setShowEditHashForm] = useState(false);
+  const [editHashValue, setEditHashValue] = useState('');
 
   // Fetch transaction data
   const { data: transaction, isLoading, refetch } = useTransaction(transactionId);
@@ -212,6 +217,7 @@ export function TransactionDetailModal({
   const unflagMutation = useUnflagTransaction();
   const approveMutation = useApproveTransaction();
   const rejectMutation = useRejectTransaction();
+  const updateTxHashMutation = useUpdateTxHash();
 
   // MFA Protection for sensitive actions
   const mfaApprove = useMfaProtectedAction({
@@ -237,12 +243,18 @@ export function TransactionDetailModal({
     unflagMutation.mutate(transactionId);
   };
 
-  const handleApprove = async () => {
-    const note = prompt('Enter approval note (optional):');
-    setPendingAction({ type: 'approve', data: { note: note || undefined } });
+  const handleApprove = () => {
+    setShowApproveForm(true);
+  };
+
+  const handleConfirmApprove = async () => {
+    const hash = approveTxHash || undefined;
+    setPendingAction({ type: 'approve', data: { txHash: hash } });
 
     await mfaApprove.executeWithMfa(async () => {
-      await approveMutation.mutateAsync({ id: transactionId, note: note || undefined });
+      await approveMutation.mutateAsync({ id: transactionId, txHash: hash });
+      setShowApproveForm(false);
+      setApproveTxHash('');
     });
   };
 
@@ -342,9 +354,46 @@ export function TransactionDetailModal({
               </div>
             </div>
 
+            {/* Approve Form */}
+            {showApproveForm && (
+              <div className="px-1 py-3 border-b border-gray-100">
+                <label className="text-sm font-medium text-gray-700">
+                  Transaction ID / Hash{' '}
+                  <span className="text-gray-400 font-normal">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={approveTxHash}
+                  onChange={(e) => setApproveTxHash(e.target.value)}
+                  placeholder="Enter blockchain tx hash or payment reference..."
+                  className="mt-2 w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent font-mono"
+                />
+                <div className="flex gap-2 mt-3">
+                  <button
+                    onClick={() => { setShowApproveForm(false); setApproveTxHash(''); }}
+                    className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleConfirmApprove}
+                    disabled={approveMutation.isPending}
+                    className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    {approveMutation.isPending ? (
+                      <Refresh size="16" className="animate-spin" />
+                    ) : (
+                      <TickSquare size="16" />
+                    )}
+                    Confirm Approve
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="flex items-center gap-2 py-3 border-b border-gray-100">
-              {transaction.status === 'PENDING' && (
+              {transaction.status === 'PENDING' && !showApproveForm && (
                 <>
                   <button
                     onClick={handleApprove}
@@ -465,9 +514,51 @@ export function TransactionDetailModal({
                   </div>
 
                   {/* Blockchain Info */}
-                  {transaction.txHash && (
-                    <div className="border-t border-gray-100 pt-4">
-                      <h3 className="text-sm font-medium text-gray-900 mb-3">Blockchain Info</h3>
+                  <div className="border-t border-gray-100 pt-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-medium text-gray-900">Blockchain Info</h3>
+                      {canVerifyTx && ['COMPLETED', 'FAILED', 'CANCELLED'].includes(transaction.status) && !showEditHashForm && (
+                        <button
+                          onClick={() => { setShowEditHashForm(true); setEditHashValue(transaction.txHash || ''); }}
+                          className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                        >
+                          {transaction.txHash ? 'Edit Hash' : 'Add Hash'}
+                        </button>
+                      )}
+                    </div>
+
+                    {showEditHashForm ? (
+                      <div>
+                        <input
+                          type="text"
+                          value={editHashValue}
+                          onChange={(e) => setEditHashValue(e.target.value)}
+                          placeholder="Enter blockchain tx hash or payment reference..."
+                          className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
+                        />
+                        <div className="flex gap-2 mt-2">
+                          <button
+                            onClick={() => { setShowEditHashForm(false); setEditHashValue(''); }}
+                            className="flex-1 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            onClick={() => {
+                              updateTxHashMutation.mutate(
+                                { id: transactionId, txHash: editHashValue },
+                                { onSuccess: () => { setShowEditHashForm(false); setEditHashValue(''); refetch(); } }
+                              );
+                            }}
+                            disabled={updateTxHashMutation.isPending || !editHashValue.trim()}
+                            className="flex-1 px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
+                          >
+                            {updateTxHashMutation.isPending ? <Refresh size="14" className="animate-spin" /> : <TickCircle size="14" />}
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    ) : transaction.txHash ? (
                       <div className="bg-gray-50 rounded-lg p-4 space-y-3">
                         <div className="flex items-center justify-between">
                           <span className="text-sm text-gray-500">Transaction Hash</span>
@@ -508,8 +599,10 @@ export function TransactionDetailModal({
                           </div>
                         )}
                       </div>
-                    </div>
-                  )}
+                    ) : (
+                      <div className="text-sm text-gray-400 italic">No blockchain hash recorded</div>
+                    )}
+                  </div>
 
                   {/* Flag Info */}
                   {transaction.isFlagged && transaction.flagReason && (

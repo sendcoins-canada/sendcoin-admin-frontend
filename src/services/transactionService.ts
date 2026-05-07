@@ -154,8 +154,8 @@ export const transactionService = {
   /**
    * Approve a flagged/pending transaction
    */
-  approveTransaction: async (id: string, note?: string): Promise<void> => {
-    await api.post(`/transactions/${id}/approve`, { note });
+  approveTransaction: async (id: string, note?: string, txHash?: string): Promise<void> => {
+    await api.post(`/transactions/${id}/approve`, { note, txHash });
   },
 
   /**
@@ -184,6 +184,13 @@ export const transactionService = {
         hasPrev: pagination.page > 1,
       },
     };
+  },
+
+  /**
+   * Update blockchain transaction hash (post-approval correction)
+   */
+  updateTxHash: async (id: string, txHash: string, type?: string): Promise<void> => {
+    await api.patch(`/transactions/${id}/hash`, { txHash, type });
   },
 
   /**
