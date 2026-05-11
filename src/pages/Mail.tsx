@@ -219,12 +219,10 @@ export default function Mail() {
   const parsedBcc = parseEmails(bccInput);
   const parsedCc = parseEmails(ccInput);
   const parsedTo = parseEmails(toInput);
-  console.log('[Mail debug]', { bccInput, parsedBcc, parsedCc, parsedTo, selectedEmails: selectedEmails.length });
   const hasRecipient =
     selectedEmails.length > 0 || parsedTo.length > 0 || parsedCc.length > 0 || parsedBcc.length > 0;
   const hasSubject = Boolean(subject.trim());
   const canSubmit = canSendEmail && hasRecipient && hasSubject && !sendMutation.isPending;
-  console.log('[Mail debug]', { hasRecipient, hasSubject, canSendEmail, canSubmit });
 
   const { data, isLoading, refetch, isFetching } = useQuery({
     queryKey: queryKeys.emails.list({ page, limit: 20 }),
