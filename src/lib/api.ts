@@ -141,7 +141,7 @@ api.interceptors.response.use(
     };
 
     // Skip refresh for auth routes that don't require authentication
-    const skipRefreshRoutes = ['/auth/admin/login', '/auth/admin/refresh', '/auth/admin/forgot-password', '/auth/admin/set-password'];
+    const skipRefreshRoutes = ['/auth/admin/login', '/auth/admin/verify-mfa', '/auth/admin/refresh', '/auth/admin/forgot-password', '/auth/admin/set-password'];
     const shouldSkipRefresh = skipRefreshRoutes.some(route => originalRequest.url?.includes(route));
 
     // Handle 401 Unauthorized
