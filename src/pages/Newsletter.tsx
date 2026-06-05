@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useLocation } from 'wouter';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { emailService, SendNewsletterPayload } from '@/services/emailService';
@@ -266,6 +267,7 @@ function newSection(): Section {
 // ─── Main component ──────────────────────────────────────────────────────────
 
 export default function Newsletter() {
+  const [, navigate] = useLocation();
   const { hasAnyPermission } = usePermissions();
   const canSend = hasAnyPermission(['MANAGE_ADMINS', 'SEND_EMAILS']);
 
@@ -300,7 +302,25 @@ export default function Newsletter() {
 
   const sendMutation = useMutation({
     mutationFn: (payload: SendNewsletterPayload) => emailService.newsletterSend(payload),
-    onSuccess: (data) => { toast.success(`Newsletter sent to ${data.count} of ${data.total} users`); setShowConfirm(false); },
+    onSuccess: (data) => {
+      toast.success(`Newsletter sent to ${data.count} of ${data.total} users`);
+      setShowConfirm(false);
+      // Clear all fields
+      setSubject('');
+      setLogoSize('medium');
+      setLogoVariant('dark');
+      setHeroImageUrl('');
+      setHeroImageHeight('auto');
+      setHeroImageBorder('none');
+      setFontFamily('Arial, sans-serif');
+      setSections([newSection()]);
+      setCtaText('');
+      setCtaUrl('');
+      setCustomEmails('');
+      setPreviewHtml('');
+      // Navigate back to mail
+      navigate('/mail');
+    },
     onError: () => { toast.error('Failed to send newsletter'); setShowConfirm(false); },
   });
 
