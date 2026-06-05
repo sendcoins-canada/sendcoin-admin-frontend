@@ -305,7 +305,7 @@ export default function Newsletter() {
   });
 
   // Live preview — auto-refresh with debounce
-  const previewTimer = useRef<ReturnType<typeof setTimeout>>();
+  const previewTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const triggerPreview = useCallback(() => {
     clearTimeout(previewTimer.current);
     previewTimer.current = setTimeout(() => {
