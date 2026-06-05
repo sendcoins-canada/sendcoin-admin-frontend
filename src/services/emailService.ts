@@ -41,6 +41,22 @@ export interface EmailsListResponse {
   pagination: { page: number; limit: number; total: number; totalPages: number };
 }
 
+export interface SendNewsletterPayload {
+  subject: string;
+  logoSize?: 'small' | 'medium' | 'large';
+  logoVariant?: 'dark' | 'light';
+  heroImageUrl?: string;
+  heroImageHeight?: string;
+  heroImageBorder?: 'none' | 'rounded';
+  greeting?: string;
+  body: string;
+  fontFamily?: string;
+  ctaText: string;
+  ctaUrl: string;
+  segment: 'all' | 'unverified' | 'inactive' | 'verified' | 'custom';
+  customEmails?: string[];
+}
+
 export const emailService = {
   send: async (payload: SendEmailPayload): Promise<{ id: number; sent: boolean }> => {
     const res = await api.post<{ id: number; sent: boolean }>('/emails/send', payload);
@@ -60,7 +76,7 @@ export const emailService = {
     }
   },
 
-  getCampaignStats: async (): Promise<{ unverified: number; inactive: number }> => {
+  getCampaignStats: async (): Promise<{ unverified: number; inactive: number; all: number; verified: number }> => {
     return api.get('/emails/campaigns/stats');
   },
 
@@ -70,5 +86,13 @@ export const emailService = {
 
   sendInactiveOutreach: async (): Promise<{ sent: boolean; count: number; total: number }> => {
     return api.post('/emails/campaigns/inactive', {});
+  },
+
+  newsletterPreview: async (payload: SendNewsletterPayload): Promise<{ html: string }> => {
+    return api.post('/emails/newsletter/preview', payload);
+  },
+
+  newsletterSend: async (payload: SendNewsletterPayload): Promise<{ sent: boolean; count: number; total: number }> => {
+    return api.post('/emails/newsletter/send', payload);
   },
 };

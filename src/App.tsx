@@ -29,6 +29,7 @@ import BankAccounts from '@/pages/BankAccounts';
 import Merchants from '@/pages/Merchants';
 import Settings from '@/pages/Settings';
 import Mail from '@/pages/Mail';
+import Newsletter from '@/pages/Newsletter';
 import Security from '@/pages/Security';
 import Rates from '@/pages/Rates';
 
@@ -147,6 +148,13 @@ const ProtectedRoutes = () => (
       <Route path="/mail">
         <PermissionGuard anyOf={['VIEW_ANALYTICS', 'MANAGE_ADMINS', 'SEND_EMAILS']}>
           <Mail />
+        </PermissionGuard>
+      </Route>
+
+      {/* Newsletter */}
+      <Route path="/newsletter">
+        <PermissionGuard anyOf={['MANAGE_ADMINS', 'SEND_EMAILS']}>
+          <Newsletter />
         </PermissionGuard>
       </Route>
 

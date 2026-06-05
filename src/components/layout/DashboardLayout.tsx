@@ -19,6 +19,7 @@ import {
   Setting2,
   Sms,
   DollarCircle,
+  DocumentText1,
 } from 'iconsax-react';
 import { NotificationsDropdown } from '@/components/notifications/NotificationsDropdown';
 import { AppLogo } from '@/components/ui/AppLogo';
@@ -68,7 +69,10 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
         { icon: UserTick, path: '/kyc', label: 'KYC Queue' },
       ],
     },
-    { groupLabel: 'Comms', items: [{ icon: Sms, path: '/mail', label: 'Mail' }] },
+    { groupLabel: 'Comms', items: [
+      { icon: Sms, path: '/mail', label: 'Mail' },
+      { icon: DocumentText1, path: '/newsletter', label: 'Newsletter' },
+    ] },
     {
       groupLabel: 'Risk & Compliance',
       items: [
