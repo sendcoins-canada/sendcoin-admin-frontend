@@ -60,10 +60,26 @@ function BlockItem({ block, index, total, onUpdate, onRemove, onMove }: {
           placeholder="Write your content..." minHeight="120px" />
       ) : (
         <div className="space-y-2">
-          <input type="text" value={block.url}
-            onChange={(e) => onUpdate(index, { ...block, url: e.target.value })}
-            placeholder="https://example.com/image.png"
-            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+          <div className="flex gap-2">
+            <input type="text" value={block.url}
+              onChange={(e) => onUpdate(index, { ...block, url: e.target.value })}
+              placeholder="Paste image URL or upload below"
+              className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+            <label className="flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-100 cursor-pointer transition-colors shrink-0">
+              <GalleryAdd size={14} /> Upload
+              <input type="file" accept="image/*" className="hidden"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  try {
+                    const res = await emailService.uploadImage(file);
+                    onUpdate(index, { ...block, url: res.url });
+                    toast.success('Image uploaded');
+                  } catch { toast.error('Upload failed'); }
+                  e.target.value = '';
+                }} />
+            </label>
+          </div>
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-1">
               <span className="text-xs text-gray-500">Width:</span>
@@ -465,10 +481,26 @@ export default function Newsletter() {
               </div>
             )}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Hero Image URL</label>
-              <input type="text" value={heroImageUrl} onChange={(e) => setHeroImageUrl(e.target.value)}
-                placeholder="https://example.com/hero-banner.png"
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+              <label className="block text-sm font-medium text-gray-700 mb-1">Hero Image</label>
+              <div className="flex gap-2">
+                <input type="text" value={heroImageUrl} onChange={(e) => setHeroImageUrl(e.target.value)}
+                  placeholder="Paste image URL or upload"
+                  className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
+                <label className="flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-100 cursor-pointer transition-colors shrink-0">
+                  <GalleryAdd size={14} /> Upload
+                  <input type="file" accept="image/*" className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      try {
+                        const res = await emailService.uploadImage(file);
+                        setHeroImageUrl(res.url);
+                        toast.success('Hero image uploaded');
+                      } catch { toast.error('Upload failed'); }
+                      e.target.value = '';
+                    }} />
+                </label>
+              </div>
             </div>
 
             {/* Hero image style controls */}

@@ -95,4 +95,12 @@ export const emailService = {
   newsletterSend: async (payload: SendNewsletterPayload): Promise<{ sent: boolean; count: number; total: number }> => {
     return api.post('/emails/newsletter/send', payload);
   },
+
+  uploadImage: async (file: File): Promise<{ id: string; url: string; filename: string; size: number }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post('/uploads/image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
 };
