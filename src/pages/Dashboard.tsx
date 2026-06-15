@@ -44,19 +44,6 @@ const formatNaira = (amount: string | number, decimals = 2) => {
   }).format(num);
 };
 
-const formatCurrency = (amount: string | number, currency: string, decimals = 2) => {
-  const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-  if (currency === 'USD') {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals,
-    }).format(num);
-  }
-  return formatNaira(num, decimals);
-};
-
 const formatNumber = (num: number) => {
   return new Intl.NumberFormat('en-US').format(num);
 };
@@ -144,8 +131,8 @@ const BalanceCard = ({ title, totalUsd, balances, icon, iconBg }: BalanceCardPro
             <span className="text-gray-600">{balance.currency}</span>
           </div>
           <div className="text-right">
-            <div className="font-medium text-gray-900">{formatCurrency(balance.amount, balance.currency)}</div>
-            <div className="text-xs text-gray-400">Fees: {formatCurrency(balance.amountUsd, balance.currency)}</div>
+            <div className="font-medium text-gray-900">{balance.amount}</div>
+            <div className="text-xs text-gray-400">{formatNaira(balance.amountUsd)}</div>
           </div>
         </div>
       ))}
