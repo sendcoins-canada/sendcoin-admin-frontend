@@ -134,17 +134,17 @@ function Calendar({
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
             return (
-              <ArrowLeft2 className={cn("size-4", className)} {...props} />
+              <ArrowLeft2 size="16" color="currentColor" className={className} {...props} />
             );
           }
 
           if (orientation === "right") {
             return (
-              <ArrowRight2 className={cn("size-4", className)} {...props} />
+              <ArrowRight2 size="16" color="currentColor" className={className} {...props} />
             );
           }
 
-          return <ArrowDown2 className={cn("size-4", className)} {...props} />;
+          return <ArrowDown2 size="16" color="currentColor" className={className} {...props} />;
         },
         DayButton: CalendarDayButton,
         WeekNumber: ({ children, ...props }) => {

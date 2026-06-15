@@ -163,14 +163,14 @@ export default function Mail() {
             className="flex items-center justify-between rounded-xl border border-gray-100 bg-white shadow-sm p-5 hover:border-blue-200 hover:shadow-md transition-all group">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors">
-                <Sms size={22} />
+                <Sms size={22} color="currentColor" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900">Compose Newsletter</h3>
                 <p className="text-sm text-gray-500">Create branded emails with rich content, images, and sections</p>
               </div>
             </div>
-            <Send2 size={20} className="text-gray-400 group-hover:text-blue-600 transition-colors" />
+            <Send2 size={20} color="currentColor" className="text-gray-400 group-hover:text-blue-600 transition-colors" />
           </a>
         </div>
       )}
@@ -179,7 +179,7 @@ export default function Mail() {
       <div className="rounded-xl border border-gray-100 bg-white overflow-hidden">
         <div className="px-4 py-3 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <DocumentText size={20} className="text-gray-600" />
+            <DocumentText size={20} color="currentColor" className="text-gray-600" />
             <span className="font-medium text-gray-900">Sent</span>
           </div>
           <button
@@ -187,7 +187,7 @@ export default function Mail() {
             disabled={isFetching}
             className="p-2 rounded-lg text-gray-500 hover:bg-gray-100"
           >
-            <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+            <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
           </button>
         </div>
         {isLoading ? (
@@ -222,12 +222,12 @@ export default function Mail() {
                       <td className="py-3 px-4">
                         {row.status === 'sent' ? (
                           <span className="inline-flex items-center gap-1 text-green-600">
-                            <TickCircle size={14} />
+                            <TickCircle size={14} color="currentColor" />
                             Sent
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 text-amber-600">
-                            <CloseCircle size={14} />
+                            <CloseCircle size={14} color="currentColor" />
                             Failed
                           </span>
                         )}
@@ -242,7 +242,7 @@ export default function Mail() {
                           className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg"
                           title="View"
                         >
-                          <Eye size={18} />
+                          <Eye size={18} color="currentColor" />
                         </button>
                       </td>
                     </tr>

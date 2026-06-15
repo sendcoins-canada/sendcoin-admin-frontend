@@ -63,12 +63,12 @@ const STATUS_COLORS: Record<TransactionStatus, { bg: string; text: string }> = {
 };
 
 const TYPE_CONFIG: Record<TransactionType, { color: string; icon: React.ReactNode; label: string }> = {
-  INCOMING: { color: 'text-green-600', icon: <ArrowDown size="16" />, label: 'Incoming' },
-  OUTGOING: { color: 'text-red-600', icon: <ArrowUp size="16" />, label: 'Outgoing' },
-  CONVERSION: { color: 'text-blue-600', icon: <ArrowSwapHorizontal size="16" />, label: 'Conversion' },
-  BUY: { color: 'text-green-600', icon: <ArrowDown size="16" />, label: 'Buy' },
-  SELL: { color: 'text-red-600', icon: <ArrowUp size="16" />, label: 'Sell' },
-  TRANSFER: { color: 'text-purple-600', icon: <ArrowSwapHorizontal size="16" />, label: 'Transfer' },
+  INCOMING: { color: 'text-green-600', icon: <ArrowDown size="16" color="currentColor" />, label: 'Incoming' },
+  OUTGOING: { color: 'text-red-600', icon: <ArrowUp size="16" color="currentColor" />, label: 'Outgoing' },
+  CONVERSION: { color: 'text-blue-600', icon: <ArrowSwapHorizontal size="16" color="currentColor" />, label: 'Conversion' },
+  BUY: { color: 'text-green-600', icon: <ArrowDown size="16" color="currentColor" />, label: 'Buy' },
+  SELL: { color: 'text-red-600', icon: <ArrowUp size="16" color="currentColor" />, label: 'Sell' },
+  TRANSFER: { color: 'text-purple-600', icon: <ArrowSwapHorizontal size="16" color="currentColor" />, label: 'Transfer' },
 };
 
 // =============================================================================
@@ -143,7 +143,7 @@ const InfoRow = ({ icon, label, value, copyable }: InfoRowProps) => {
           onClick={handleCopy}
           className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-gray-600"
         >
-          {copied ? <TickCircle size="14" className="text-green-600" /> : <Copy size="14" />}
+          {copied ? <TickCircle size="14" color="currentColor" className="text-green-600" /> : <Copy size="14" color="currentColor" />}
         </button>
       )}
     </div>
@@ -175,7 +175,7 @@ const EndpointCard = ({ title, endpoint }: EndpointCardProps) => (
           endpoint.type === 'WALLET' ? 'bg-yellow-100 text-yellow-600' : 'bg-blue-100 text-blue-600'
         }`}
       >
-        {endpoint.type === 'WALLET' ? <Wallet size="18" /> : <Bank size="18" />}
+        {endpoint.type === 'WALLET' ? <Wallet size="18" color="currentColor" /> : <Bank size="18" color="currentColor" />}
       </div>
       <div className="flex-1 min-w-0">
         <div className="text-sm font-medium text-gray-900 truncate">
@@ -313,7 +313,7 @@ export function TransactionDetailModal({
       <DialogContent className="max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh className="animate-spin text-blue-600"  size="32" color="currentColor" />
           </div>
         ) : transaction ? (
           <>
@@ -348,7 +348,7 @@ export function TransactionDetailModal({
                     </span>
                     {transaction.isFlagged && (
                       <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
-                        <Warning2 size="12" />
+                        <Warning2 size="12" color="currentColor" />
                         Flagged
                       </span>
                     )}
@@ -359,7 +359,7 @@ export function TransactionDetailModal({
                     onClick={() => refetch()}
                     className="p-2 hover:bg-gray-100 rounded-lg text-gray-500"
                   >
-                    <Refresh size="18" />
+                    <Refresh size="18" color="currentColor" />
                   </button>
                 </div>
               </div>
@@ -404,9 +404,9 @@ export function TransactionDetailModal({
                     className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {approveMutation.isPending ? (
-                      <Refresh size="16" className="animate-spin" />
+                      <Refresh size="16" color="currentColor" className="animate-spin" />
                     ) : (
-                      <TickSquare size="16" />
+                      <TickSquare size="16" color="currentColor" />
                     )}
                     Confirm Approve
                   </button>
@@ -424,7 +424,7 @@ export function TransactionDetailModal({
                     title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : 'Approve with manual TX hash'}
                     className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-green-700 disabled:opacity-50"
                   >
-                    <TickSquare size="16" />
+                    <TickSquare size="16" color="currentColor" />
                     Approve
                   </button>
                   {transaction.status === 'PENDING_FUNDING' && (
@@ -435,9 +435,9 @@ export function TransactionDetailModal({
                       className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-blue-700 disabled:opacity-50"
                     >
                       {retryMutation.isPending ? (
-                        <Refresh size="16" className="animate-spin" />
+                        <Refresh size="16" color="currentColor" className="animate-spin" />
                       ) : (
-                        <Refresh size="16" />
+                        <Refresh size="16" color="currentColor" />
                       )}
                       Retry Send
                     </button>
@@ -448,7 +448,7 @@ export function TransactionDetailModal({
                     title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : undefined}
                     className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-red-700 disabled:opacity-50"
                   >
-                    <CloseSquare size="16" />
+                    <CloseSquare size="16" color="currentColor" />
                     Reject
                   </button>
                 </>
@@ -460,7 +460,7 @@ export function TransactionDetailModal({
                   title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : undefined}
                   className="flex-1 px-4 py-2 bg-orange-50 text-orange-700 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-orange-100 disabled:opacity-50"
                 >
-                  <Flag size="16" />
+                  <Flag size="16" color="currentColor" />
                   Flag
                 </button>
               ) : (
@@ -470,7 +470,7 @@ export function TransactionDetailModal({
                   title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : undefined}
                   className="flex-1 px-4 py-2 bg-gray-50 text-gray-700 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-gray-100 disabled:opacity-50"
                 >
-                  <Flag2 size="16" />
+                  <Flag2 size="16" color="currentColor" />
                   Unflag
                 </button>
               )}
@@ -511,19 +511,19 @@ export function TransactionDetailModal({
                     <div className="space-y-1">
                       <h3 className="text-sm font-medium text-gray-900 mb-3">Transaction Info</h3>
                       <InfoRow
-                        icon={<Clock size="16" />}
+                        icon={<Clock size="16" color="currentColor" />}
                         label="Initiated"
                         value={formatDateTime(transaction.initiatedAt)}
                       />
                       {transaction.completedAt && (
                         <InfoRow
-                          icon={<TickCircle size="16" />}
+                          icon={<TickCircle size="16" color="currentColor" />}
                           label="Completed"
                           value={formatDateTime(transaction.completedAt)}
                         />
                       )}
                       <InfoRow
-                        icon={<Wallet size="16" />}
+                        icon={<Wallet size="16" color="currentColor" />}
                         label="Fee"
                         value={`${formatAmount(transaction.fee, transaction.currency)} (${formatUsd(transaction.feeUsd)})`}
                       />
@@ -532,18 +532,18 @@ export function TransactionDetailModal({
                     <div className="space-y-1">
                       <h3 className="text-sm font-medium text-gray-900 mb-3">User Info</h3>
                       <InfoRow
-                        icon={<User size="16" />}
+                        icon={<User size="16" color="currentColor" />}
                         label="User"
                         value={transaction.userName}
                       />
                       <InfoRow
-                        icon={<User size="16" />}
+                        icon={<User size="16" color="currentColor" />}
                         label="Email"
                         value={transaction.userEmail}
                         copyable
                       />
                       <InfoRow
-                        icon={<User size="16" />}
+                        icon={<User size="16" color="currentColor" />}
                         label="User ID"
                         value={transaction.userId}
                         copyable
@@ -591,7 +591,7 @@ export function TransactionDetailModal({
                             disabled={updateTxHashMutation.isPending || !editHashValue.trim()}
                             className="flex-1 px-3 py-1.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
                           >
-                            {updateTxHashMutation.isPending ? <Refresh size="14" className="animate-spin" /> : <TickCircle size="14" />}
+                            {updateTxHashMutation.isPending ? <Refresh size="14" color="currentColor" className="animate-spin" /> : <TickCircle size="14" color="currentColor" />}
                             Save
                           </button>
                         </div>
@@ -608,7 +608,7 @@ export function TransactionDetailModal({
                               onClick={() => navigator.clipboard.writeText(transaction.txHash!)}
                               className="p-1 hover:bg-gray-200 rounded"
                             >
-                              <Copy size="14" className="text-gray-400" />
+                              <Copy size="14" color="currentColor" className="text-gray-400" />
                             </button>
                             <a
                               href="#"
@@ -616,7 +616,7 @@ export function TransactionDetailModal({
                               rel="noopener noreferrer"
                               className="p-1 hover:bg-gray-200 rounded"
                             >
-                              <Export size="14" className="text-gray-400" />
+                              <Export size="14" color="currentColor" className="text-gray-400" />
                             </a>
                           </div>
                         </div>
@@ -646,7 +646,7 @@ export function TransactionDetailModal({
                   {transaction.isFlagged && transaction.flagReason && (
                     <div className="bg-orange-50 border border-orange-100 rounded-lg p-4">
                       <div className="flex items-center gap-2 text-orange-700 mb-2">
-                        <Warning2 size="16" />
+                        <Warning2 size="16" color="currentColor" />
                         <span className="text-sm font-medium">Flagged Transaction</span>
                       </div>
                       <div className="text-sm text-orange-600">{transaction.flagReason}</div>
@@ -673,7 +673,7 @@ export function TransactionDetailModal({
                             STATUS_COLORS[item.status]?.bg ?? 'bg-gray-100'
                           } ${STATUS_COLORS[item.status]?.text ?? 'text-gray-600'}`}
                         >
-                          <Clock size="14" />
+                          <Clock size="14" color="currentColor" />
                         </div>
                         <div className="flex-1">
                           <div className="text-sm font-medium text-gray-900">{item.action}</div>

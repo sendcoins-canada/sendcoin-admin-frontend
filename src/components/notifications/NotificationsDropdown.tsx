@@ -30,15 +30,15 @@ import type { NotificationType, NotificationPriority, NotificationCategory } fro
 // =============================================================================
 
 const TYPE_CONFIG: Record<NotificationType, { icon: React.ReactNode; color: string }> = {
-  LOGIN: { icon: <Shield size="14" />, color: 'text-blue-600 bg-blue-100' },
-  SUSPICIOUS_ACTIVITY: { icon: <Warning2 size="14" />, color: 'text-red-600 bg-red-100' },
-  USER_REPORT: { icon: <User size="14" />, color: 'text-orange-600 bg-orange-100' },
-  LARGE_TRANSACTION: { icon: <ArrowSwapHorizontal size="14" />, color: 'text-purple-600 bg-purple-100' },
-  SYSTEM_ALERT: { icon: <Setting2 size="14" />, color: 'text-gray-600 bg-gray-100' },
-  KYC_PENDING: { icon: <User size="14" />, color: 'text-yellow-600 bg-yellow-100' },
-  TRANSACTION_FLAGGED: { icon: <Warning2 size="14" />, color: 'text-red-600 bg-red-100' },
-  ROLE_CHANGED: { icon: <Shield size="14" />, color: 'text-indigo-600 bg-indigo-100' },
-  ADMIN_ACTION: { icon: <User size="14" />, color: 'text-green-600 bg-green-100' },
+  LOGIN: { icon: <Shield size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100' },
+  SUSPICIOUS_ACTIVITY: { icon: <Warning2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
+  USER_REPORT: { icon: <User size="14" color="currentColor" />, color: 'text-orange-600 bg-orange-100' },
+  LARGE_TRANSACTION: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-purple-600 bg-purple-100' },
+  SYSTEM_ALERT: { icon: <Setting2 size="14" color="currentColor" />, color: 'text-gray-600 bg-gray-100' },
+  KYC_PENDING: { icon: <User size="14" color="currentColor" />, color: 'text-yellow-600 bg-yellow-100' },
+  TRANSACTION_FLAGGED: { icon: <Warning2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
+  ROLE_CHANGED: { icon: <Shield size="14" color="currentColor" />, color: 'text-indigo-600 bg-indigo-100' },
+  ADMIN_ACTION: { icon: <User size="14" color="currentColor" />, color: 'text-green-600 bg-green-100' },
 };
 
 const PRIORITY_COLORS: Record<NotificationPriority, string> = {
@@ -105,7 +105,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
         <button
           className={`relative p-2 hover:bg-gray-100 rounded-lg transition-colors ${className}`}
         >
-          <Notification size="20" className="text-gray-600" />
+          <Notification size="20" color="currentColor" className="text-gray-600" />
           {unreadCount > 0 && (
             <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
               {unreadCount > 99 ? '99+' : unreadCount}
@@ -130,7 +130,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
               disabled={isLoading}
               className="p-1.5 hover:bg-gray-100 rounded text-gray-400 hover:text-gray-600"
             >
-              <Refresh size="14" className={isLoading ? 'animate-spin' : ''} />
+              <Refresh size="14" color="currentColor" className={isLoading ? 'animate-spin' : ''} />
             </button>
             {unreadCount > 0 && (
               <button
@@ -139,7 +139,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
                 className="p-1.5 hover:bg-gray-100 rounded text-gray-400 hover:text-gray-600"
                 title="Mark all as read"
               >
-                <TickCircle size="14" />
+                <TickCircle size="14" color="currentColor" />
               </button>
             )}
           </div>
@@ -149,11 +149,11 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
         <div className="max-h-[400px] overflow-y-auto">
           {isLoading ? (
             <div className="flex items-center justify-center h-32">
-              <Refresh className="w-6 h-6 animate-spin text-blue-600" />
+              <Refresh size="24" color="currentColor" className="animate-spin text-blue-600" />
             </div>
           ) : notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 text-gray-500">
-              <Notification size="32" className="mb-2 text-gray-300" />
+              <Notification size="32" color="currentColor" className="mb-2 text-gray-300" />
               <span className="text-sm">No notifications</span>
             </div>
           ) : (
@@ -197,7 +197,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
                         </p>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="flex items-center gap-1 text-[10px] text-gray-400">
-                            <Timer size="10" />
+                            <Timer size="10" color="currentColor" />
                             {formatRelativeTime(notification.createdAt)}
                           </span>
                           {!notification.isRead && (
@@ -214,7 +214,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
                           className="p-1 hover:bg-gray-200 rounded text-gray-400 hover:text-gray-600 flex-shrink-0"
                           title="Mark as read"
                         >
-                          <TickCircle size="14" />
+                          <TickCircle size="14" color="currentColor" />
                         </button>
                       )}
                     </div>

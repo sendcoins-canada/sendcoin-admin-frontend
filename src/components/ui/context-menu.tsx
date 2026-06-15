@@ -32,7 +32,7 @@ const ContextMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ArrowRight2 className="ml-auto h-4 w-4" />
+    <ArrowRight2 size="16" color="currentColor" className="ml-auto" />
   </ContextMenuPrimitive.SubTrigger>
 ));
 ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName;
@@ -102,7 +102,7 @@ const ContextMenuCheckboxItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <ContextMenuPrimitive.ItemIndicator>
-        <TickCircle className="h-2 w-2 fill-current" />
+        <TickCircle size="8" color="currentColor" />
       </ContextMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -125,7 +125,7 @@ const ContextMenuRadioItem = React.forwardRef<
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
       <ContextMenuPrimitive.ItemIndicator>
-        <RecordCircle className="h-4 w-4 fill-current" />
+        <RecordCircle size="16" color="currentColor" />
       </ContextMenuPrimitive.ItemIndicator>
     </span>
     {children}

@@ -109,7 +109,7 @@ export function RichTextEditor({
           className={`p-2 rounded hover:bg-gray-200 transition-colors ${editor.isActive('bold') ? 'bg-gray-200 text-blue-600' : 'text-gray-600'}`}
           title="Bold"
         >
-          <TextBold size={18} />
+          <TextBold size={18} color="currentColor" />
         </button>
         <button
           type="button"
@@ -117,7 +117,7 @@ export function RichTextEditor({
           className={`p-2 rounded hover:bg-gray-200 transition-colors ${editor.isActive('italic') ? 'bg-gray-200 text-blue-600' : 'text-gray-600'}`}
           title="Italic"
         >
-          <TextItalic size={18} />
+          <TextItalic size={18} color="currentColor" />
         </button>
         <button
           type="button"
@@ -169,7 +169,7 @@ export function RichTextEditor({
           className={`p-2 rounded hover:bg-gray-200 transition-colors ${editor.isActive('bulletList') ? 'bg-gray-200 text-blue-600' : 'text-gray-600'}`}
           title="Bullet list"
         >
-          <Menu size={18} variant={editor.isActive('bulletList') ? 'Bold' : 'Linear'} />
+          <Menu size={18} color="currentColor" variant={editor.isActive('bulletList') ? 'Bold' : 'Linear'} />
         </button>
         <button
           type="button"
@@ -285,7 +285,7 @@ export function RichTextEditor({
           className={`p-2 rounded hover:bg-gray-200 transition-colors ${editor.isActive('link') ? 'bg-gray-200 text-blue-600' : 'text-gray-600'}`}
           title="Link"
         >
-          <Link2 size={18} />
+          <Link2 size={18} color="currentColor" />
         </button>
         <button
           type="button"
@@ -293,7 +293,7 @@ export function RichTextEditor({
           className="p-2 rounded hover:bg-gray-200 text-gray-600 transition-colors"
           title="Horizontal rule"
         >
-          <Minus size={18} />
+          <Minus size={18} color="currentColor" />
         </button>
         <div className="ml-auto flex items-center gap-1">
           <select

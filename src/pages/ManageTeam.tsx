@@ -271,7 +271,7 @@ export default function ManageTeam() {
             disabled={isFetching}
             className="p-2 bg-gray-50 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
           >
-            <Refresh size="16" className={isFetching ? 'animate-spin' : ''} />
+            <Refresh size="16" color="currentColor" className={isFetching ? 'animate-spin' : ''} />
           </button>
           <button
             onClick={() => {
@@ -283,7 +283,7 @@ export default function ManageTeam() {
             }}
             className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-full flex items-center gap-2 hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
           >
-            <Add size="16" />
+            <Add size="16" color="currentColor" />
             {activeTab === 'members' ? 'Invite member' : 'Create role'}
           </button>
         </div>
@@ -370,7 +370,7 @@ export default function ManageTeam() {
                       <td className="px-6 py-4">
                         {member.mfaEnabled ? (
                           <div className="flex items-center gap-1 text-green-600">
-                            <ShieldTick size="14" variant="Bold" />
+                            <ShieldTick size="14" color="currentColor" variant="Bold" />
                             <span className="text-xs">Enabled</span>
                           </div>
                         ) : (
@@ -387,7 +387,7 @@ export default function ManageTeam() {
                           } ${STATUS_COLORS[member.status]?.text ?? 'text-gray-700'}`}
                         >
                           {member.status}
-                          <ArrowDown2 size="10" />
+                          <ArrowDown2 size="10" color="currentColor" />
                         </div>
                       </td>
                       <td className="px-6 py-4 text-right min-w-[140px] whitespace-nowrap">
@@ -400,7 +400,7 @@ export default function ManageTeam() {
                               title="Activate member"
                               type="button"
                             >
-                              <UserTick size="18" variant="Bold" />
+                              <UserTick size="18" color="currentColor" variant="Bold" />
                               <span>Activate</span>
                             </button>
                           )}
@@ -412,7 +412,7 @@ export default function ManageTeam() {
                               title="Deactivate member"
                               type="button"
                             >
-                              <UserRemove size="18" variant="Bold" />
+                              <UserRemove size="18" color="currentColor" variant="Bold" />
                               <span>Deactivate</span>
                             </button>
                           )}
@@ -423,7 +423,7 @@ export default function ManageTeam() {
                             title="Delete permanently"
                             type="button"
                           >
-                            <Trash size="18" variant="Bold" />
+                            <Trash size="18" color="currentColor" variant="Bold" />
                             <span>Delete</span>
                           </button>
                         </div>
@@ -485,7 +485,7 @@ export default function ManageTeam() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
-                            <ShieldTick size="16" variant="Bold" />
+                            <ShieldTick size="16" color="currentColor" variant="Bold" />
                           </div>
                           <span className="font-medium text-gray-900">{role.name}</span>
                         </div>
@@ -534,7 +534,7 @@ export default function ManageTeam() {
                           className="p-1.5 hover:bg-gray-100 rounded-lg text-gray-400"
                           disabled={role.isSystem}
                         >
-                          <RecordCircle size="16" />
+                          <RecordCircle size="16" color="currentColor" />
                         </button>
                       </td>
                     </tr>

@@ -95,7 +95,7 @@ export function TeamMemberDetailModal({
             <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
               {currentRole && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-medium">
-                  <Profile2User size={14} />
+                  <Profile2User size={14} color="currentColor" />
                   {currentRole.name}
                 </span>
               )}
@@ -139,22 +139,22 @@ export function TeamMemberDetailModal({
             <div className="space-y-2">
               <div className="text-xs font-medium text-gray-500 uppercase">Profile</div>
               <div className="flex items-center gap-2 text-gray-700">
-                <Sms size={16} className="text-gray-400" />
+                <Sms size={16} color="currentColor" className="text-gray-400" />
                 <span>{member.email}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-700">
-                <Calendar size={16} className="text-gray-400" />
+                <Calendar size={16} color="currentColor" className="text-gray-400" />
                 <span>Joined {formatDateTime(member.createdAt)}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-700">
-                <ShieldTick size={16} className={member.mfaEnabled ? 'text-green-600' : 'text-gray-400'} />
+                <ShieldTick size={16} color="currentColor" className={member.mfaEnabled ? 'text-green-600' : 'text-gray-400'} />
                 <span>{member.mfaEnabled ? 'MFA enabled' : 'MFA not enabled'}</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="text-xs font-medium text-gray-500 uppercase">Last Activity</div>
               <div className="flex items-center gap-2 text-gray-700">
-                <DocumentText size={16} className="text-gray-400" />
+                <DocumentText size={16} color="currentColor" className="text-gray-400" />
                 <span>Last active: {member.lastActive ? formatDateTime(member.lastActive) : 'Never'}</span>
               </div>
             </div>
@@ -165,7 +165,7 @@ export function TeamMemberDetailModal({
           <div>
             {logsLoading ? (
               <div className="flex items-center justify-center py-8">
-                <Refresh className="w-6 h-6 animate-spin text-blue-600" />
+                <Refresh className="animate-spin text-blue-600"  size="24" color="currentColor" />
               </div>
             ) : logs.length === 0 ? (
               <p className="text-sm text-gray-500 py-4">No recent activity for this admin.</p>
@@ -177,7 +177,7 @@ export function TeamMemberDetailModal({
                       <div
                         className="w-7 h-7 rounded-lg bg-gray-50 flex items-center justify-center text-gray-500"
                       >
-                        <ArrowSwapHorizontal size={14} />
+                        <ArrowSwapHorizontal size={14} color="currentColor" />
                       </div>
                       <div className="flex-1">
                         <div className="text-xs font-medium text-gray-900">

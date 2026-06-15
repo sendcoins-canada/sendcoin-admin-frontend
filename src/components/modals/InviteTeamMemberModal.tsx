@@ -155,7 +155,7 @@ export function InviteTeamMemberModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
-              <Add size="20" />
+              <Add size="20" color="currentColor" />
             </div>
             Invite Team Member
           </DialogTitle>
@@ -163,7 +163,7 @@ export function InviteTeamMemberModal({
 
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh className="animate-spin text-blue-600"  size="32" color="currentColor" />
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -171,7 +171,7 @@ export function InviteTeamMemberModal({
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
-                <Sms size="18" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Sms size="18" color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
                   name="email"
@@ -192,7 +192,7 @@ export function InviteTeamMemberModal({
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">First Name</label>
                 <div className="relative">
-                  <User size="18" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <User size="18" color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     name="firstName"
@@ -211,7 +211,7 @@ export function InviteTeamMemberModal({
               <div className="space-y-1">
                 <label className="text-sm font-medium text-gray-700">Last Name</label>
                 <div className="relative">
-                  <User size="18" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <User size="18" color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     name="lastName"
@@ -231,7 +231,7 @@ export function InviteTeamMemberModal({
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">Role</label>
               <div className="relative">
-                <ShieldTick size="18" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <ShieldTick size="18" color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <select
                   name="roleId"
                   value={formData.roleId}
@@ -257,7 +257,7 @@ export function InviteTeamMemberModal({
                 Department <span className="text-gray-400">(Optional)</span>
               </label>
               <div className="relative">
-                <Building size="18" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Building size="18" color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                 <select
                   name="departmentId"
                   value={formData.departmentId}
@@ -298,12 +298,12 @@ export function InviteTeamMemberModal({
               >
                 {inviteMutation.isPending ? (
                   <>
-                    <Refresh className="w-4 h-4 animate-spin" />
+                    <Refresh className="animate-spin"  size="16" color="currentColor" />
                     Sending...
                   </>
                 ) : (
                   <>
-                    <Sms size="16" />
+                    <Sms size="16" color="currentColor" />
                     Send Invitation
                   </>
                 )}

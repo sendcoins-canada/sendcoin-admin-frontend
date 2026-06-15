@@ -41,7 +41,7 @@ const LoginForm = ({ onSubmit, isLoading, error }: LoginFormProps) => {
         {/* Email Input */}
         <div className="relative">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
-            <Sms size="20" variant="Bold" />
+            <Sms size="20" color="currentColor" variant="Bold" />
           </div>
           <input
             id="email"
@@ -65,7 +65,7 @@ const LoginForm = ({ onSubmit, isLoading, error }: LoginFormProps) => {
         {/* Password Input */}
         <div className="relative">
           <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
-            <Lock size="20" variant="Bold" />
+            <Lock size="20" color="currentColor" variant="Bold" />
           </div>
           <input
             id="password"
@@ -85,9 +85,9 @@ const LoginForm = ({ onSubmit, isLoading, error }: LoginFormProps) => {
             className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 z-10"
           >
             {showPassword ? (
-              <EyeSlash size="20" variant="Bold" />
+              <EyeSlash size="20" color="currentColor" variant="Bold" />
             ) : (
-              <Eye size="20" variant="Bold" />
+              <Eye size="20" color="currentColor" variant="Bold" />
             )}
           </button>
           {formik.touched.password && formik.errors.password ? (
@@ -130,7 +130,7 @@ const LoginForm = ({ onSubmit, isLoading, error }: LoginFormProps) => {
       >
         {isLoading ? (
           <>
-            <Refresh className="w-5 h-5 animate-spin" />
+            <Refresh size="20" color="currentColor" className="animate-spin" />
             Signing in...
           </>
         ) : (
@@ -184,7 +184,7 @@ const MfaForm = ({ onSubmit, onCancel, isLoading, error }: MfaFormProps) => {
       {/* OTP Input */}
       <div className="relative">
         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10 pointer-events-none">
-          <ShieldTick size="20" variant="Bold" />
+          <ShieldTick size="20" color="currentColor" variant="Bold" />
         </div>
         <input
           type="text"
@@ -216,7 +216,7 @@ const MfaForm = ({ onSubmit, onCancel, isLoading, error }: MfaFormProps) => {
       >
         {isLoading ? (
           <>
-            <Refresh className="w-5 h-5 animate-spin" />
+            <Refresh size="20" color="currentColor" className="animate-spin" />
             Verifying...
           </>
         ) : (

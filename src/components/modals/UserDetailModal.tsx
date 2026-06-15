@@ -56,21 +56,21 @@ const STATUS_COLORS: Record<UserStatus, { bg: string; text: string }> = {
 };
 
 const KYC_CONFIG: Record<KycStatus, { color: string; icon: React.ReactNode; label: string }> = {
-  VERIFIED: { color: 'text-green-600', icon: <ShieldTick size="16" variant="Bold" />, label: 'Verified' },
-  PENDING: { color: 'text-yellow-600', icon: <Clock size="16" variant="Bold" />, label: 'Pending' },
-  NOT_STARTED: { color: 'text-gray-400', icon: <ShieldCross size="16" variant="Bold" />, label: 'Not Started' },
-  REJECTED: { color: 'text-red-600', icon: <Warning2 size="16" variant="Bold" />, label: 'Rejected' },
-  EXPIRED: { color: 'text-orange-600', icon: <Clock size="16" variant="Bold" />, label: 'Expired' },
+  VERIFIED: { color: 'text-green-600', icon: <ShieldTick size="16" color="currentColor" variant="Bold" />, label: 'Verified' },
+  PENDING: { color: 'text-yellow-600', icon: <Clock size="16" color="currentColor" variant="Bold" />, label: 'Pending' },
+  NOT_STARTED: { color: 'text-gray-400', icon: <ShieldCross size="16" color="currentColor" variant="Bold" />, label: 'Not Started' },
+  REJECTED: { color: 'text-red-600', icon: <Warning2 size="16" color="currentColor" variant="Bold" />, label: 'Rejected' },
+  EXPIRED: { color: 'text-orange-600', icon: <Clock size="16" color="currentColor" variant="Bold" />, label: 'Expired' },
 };
 
 const ACTIVITY_TYPE_CONFIG: Record<UserActivity['type'], { icon: React.ReactNode; color: string }> = {
-  LOGIN: { icon: <Login size="14" />, color: 'text-green-600 bg-green-100' },
-  LOGOUT: { icon: <Logout size="14" />, color: 'text-gray-600 bg-gray-100' },
-  TRANSACTION: { icon: <ArrowSwapHorizontal size="14" />, color: 'text-blue-600 bg-blue-100' },
-  KYC_UPDATE: { icon: <DocumentText size="14" />, color: 'text-purple-600 bg-purple-100' },
-  PROFILE_UPDATE: { icon: <UserIcon size="14" />, color: 'text-orange-600 bg-orange-100' },
-  WALLET_ACTION: { icon: <Wallet size="14" />, color: 'text-yellow-600 bg-yellow-100' },
-  SECURITY: { icon: <ShieldTick size="14" />, color: 'text-red-600 bg-red-100' },
+  LOGIN: { icon: <Login size="14" color="currentColor" />, color: 'text-green-600 bg-green-100' },
+  LOGOUT: { icon: <Logout size="14" color="currentColor" />, color: 'text-gray-600 bg-gray-100' },
+  TRANSACTION: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100' },
+  KYC_UPDATE: { icon: <DocumentText size="14" color="currentColor" />, color: 'text-purple-600 bg-purple-100' },
+  PROFILE_UPDATE: { icon: <UserIcon size="14" color="currentColor" />, color: 'text-orange-600 bg-orange-100' },
+  WALLET_ACTION: { icon: <Wallet size="14" color="currentColor" />, color: 'text-yellow-600 bg-yellow-100' },
+  SECURITY: { icon: <ShieldTick size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
 };
 
 // =============================================================================
@@ -172,7 +172,7 @@ const InfoRow = ({ icon, label, value, copyable }: InfoRowProps) => {
           onClick={handleCopy}
           className="p-1 hover:bg-gray-100 rounded text-gray-400 hover:text-gray-600"
         >
-          {copied ? <TickCircle size="14" className="text-green-600" /> : <Copy size="14" />}
+          {copied ? <TickCircle size="14" color="currentColor" className="text-green-600" /> : <Copy size="14" color="currentColor" />}
         </button>
       )}
     </div>
@@ -241,7 +241,7 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
       <DialogContent className="max-w-2xl max-h-[85vh] overflow-hidden flex flex-col">
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh className="animate-spin text-blue-600"  size="32" color="currentColor" />
           </div>
         ) : user ? (
           <>
@@ -281,7 +281,7 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                     onClick={() => refetch()}
                     className="p-2 hover:bg-gray-100 rounded-lg text-gray-500"
                   >
-                    <Refresh size="18" />
+                    <Refresh size="18" color="currentColor" />
                   </button>
                   {user.status === 'ACTIVE' ? (
                     <button
@@ -290,7 +290,7 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                       title={!canSuspendUser ? 'You need SUSPEND_USERS permission.' : undefined}
                       className="px-3 py-2 bg-yellow-50 text-yellow-700 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-yellow-100 disabled:opacity-50"
                     >
-                      <UserRemove size="16" />
+                      <UserRemove size="16" color="currentColor" />
                       Suspend
                     </button>
                   ) : user.status === 'SUSPENDED' ? (
@@ -300,7 +300,7 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                       title={!canSuspendUser ? 'You need SUSPEND_USERS permission.' : undefined}
                       className="px-3 py-2 bg-green-50 text-green-700 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-green-100 disabled:opacity-50"
                     >
-                      <UserTick size="16" />
+                      <UserTick size="16" color="currentColor" />
                       Activate
                     </button>
                   ) : null}
@@ -336,30 +336,30 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                   <div className="space-y-1">
                     <h3 className="text-sm font-medium text-gray-900 mb-3">Personal Information</h3>
                     <InfoRow
-                      icon={<UserIcon size="16" />}
+                      icon={<UserIcon size="16" color="currentColor" />}
                       label="User ID"
                       value={user.id}
                       copyable
                     />
                     <InfoRow
-                      icon={<Sms size="16" />}
+                      icon={<Sms size="16" color="currentColor" />}
                       label="Email"
                       value={user.email}
                       copyable
                     />
                     <InfoRow
-                      icon={<Call size="16" />}
+                      icon={<Call size="16" color="currentColor" />}
                       label="Phone"
                       value={user.phone}
                       copyable
                     />
                     <InfoRow
-                      icon={<Location size="16" />}
+                      icon={<Location size="16" color="currentColor" />}
                       label="Country"
                       value={user.country}
                     />
                     <InfoRow
-                      icon={<Calendar size="16" />}
+                      icon={<Calendar size="16" color="currentColor" />}
                       label="Date Joined"
                       value={formatDate(user.createdAt)}
                     />
@@ -369,17 +369,17 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                   <div className="space-y-1">
                     <h3 className="text-sm font-medium text-gray-900 mb-3">Account Information</h3>
                     <InfoRow
-                      icon={<Wallet size="16" />}
+                      icon={<Wallet size="16" color="currentColor" />}
                       label="Account Type"
                       value={user.accountType === 'PERSONAL' ? 'Individual' : 'Business'}
                     />
                     <InfoRow
-                      icon={<Wallet size="16" />}
+                      icon={<Wallet size="16" color="currentColor" />}
                       label="Wallets"
                       value={walletsList.length > 0 ? walletsList.length : (user.walletCount ?? 'N/A')}
                     />
                     <InfoRow
-                      icon={<Card size="16" />}
+                      icon={<Card size="16" color="currentColor" />}
                       label="Total Balance"
                       value={formatCurrency(
                         walletsList.length > 0
@@ -388,12 +388,12 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                       )}
                     />
                     <InfoRow
-                      icon={<Clock size="16" />}
+                      icon={<Clock size="16" color="currentColor" />}
                       label="Last Activity"
                       value={formatDateTime(user.lastActivity)}
                     />
                     <InfoRow
-                      icon={<Card size="16" />}
+                      icon={<Card size="16" color="currentColor" />}
                       label="Transactions"
                       value={user.transactionCount}
                     />
@@ -408,12 +408,12 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                         <div className="flex items-center gap-2 mt-1">
                           {user.emailVerified ? (
                             <>
-                              <TickCircle size="16" className="text-green-600" />
+                              <TickCircle size="16" color="currentColor" className="text-green-600" />
                               <span className="text-sm font-medium text-green-700">Verified</span>
                             </>
                           ) : (
                             <>
-                              <Warning2 size="16" className="text-yellow-600" />
+                              <Warning2 size="16" color="currentColor" className="text-yellow-600" />
                               <span className="text-sm font-medium text-yellow-700">Not Verified</span>
                             </>
                           )}
@@ -424,12 +424,12 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                         <div className="flex items-center gap-2 mt-1">
                           {user.phoneVerified ? (
                             <>
-                              <TickCircle size="16" className="text-green-600" />
+                              <TickCircle size="16" color="currentColor" className="text-green-600" />
                               <span className="text-sm font-medium text-green-700">Verified</span>
                             </>
                           ) : (
                             <>
-                              <Warning2 size="16" className="text-yellow-600" />
+                              <Warning2 size="16" color="currentColor" className="text-yellow-600" />
                               <span className="text-sm font-medium text-yellow-700">Not Verified</span>
                             </>
                           )}
@@ -440,12 +440,12 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                         <div className="flex items-center gap-2 mt-1">
                           {user.mfaEnabled ? (
                             <>
-                              <ShieldTick size="16" className="text-green-600" />
+                              <ShieldTick size="16" color="currentColor" className="text-green-600" />
                               <span className="text-sm font-medium text-green-700">Enabled</span>
                             </>
                           ) : (
                             <>
-                              <ShieldCross size="16" className="text-gray-400" />
+                              <ShieldCross size="16" color="currentColor" className="text-gray-400" />
                               <span className="text-sm font-medium text-gray-500">Disabled</span>
                             </>
                           )}
@@ -525,7 +525,7 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                 <div className="space-y-3">
                   {walletsLoading ? (
                     <div className="flex items-center justify-center py-8">
-                      <Refresh className="w-6 h-6 animate-spin text-blue-600" />
+                      <Refresh className="animate-spin text-blue-600"  size="24" color="currentColor" />
                     </div>
                   ) : walletsList.length > 0 ? (
                     walletsList.map((wallet) => (
@@ -573,14 +573,14 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                 <div className="space-y-4">
                   {activityLoading ? (
                     <div className="flex items-center justify-center py-8">
-                      <Refresh className="w-6 h-6 animate-spin text-blue-600" />
+                      <Refresh className="animate-spin text-blue-600"  size="24" color="currentColor" />
                     </div>
                   ) : activityData?.data && activityData.data.length > 0 ? (
                     <>
                       <div className="space-y-3">
                         {activityData.data.map((activity) => {
                           const config = ACTIVITY_TYPE_CONFIG[activity.type] ?? {
-                            icon: <Clock size="14" />,
+                            icon: <Clock size="14" color="currentColor" />,
                             color: 'text-gray-600 bg-gray-100',
                           };
                           return (
@@ -608,7 +608,7 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                                 {activity.ip && (
                                   <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-400">
                                     <span className="flex items-center gap-1">
-                                      <Monitor size="10" />
+                                      <Monitor size="10" color="currentColor" />
                                       IP: {activity.ip}
                                     </span>
                                   </div>

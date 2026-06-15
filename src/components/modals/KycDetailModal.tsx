@@ -203,7 +203,7 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
       <DialogContent className="max-w-lg">
         {isLoading ? (
           <div className="flex items-center justify-center h-48">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh className="animate-spin text-blue-600"  size="32" color="currentColor" />
           </div>
         ) : kycData ? (
           <>
@@ -233,9 +233,9 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
                       }`}
                     >
                       {kycData.kycStatus === 'verified' ? (
-                        <ShieldTick size="14" variant="Bold" />
+                        <ShieldTick size="14" color="currentColor" variant="Bold" />
                       ) : (
-                        <Clock size="14" variant="Bold" />
+                        <Clock size="14" color="currentColor" variant="Bold" />
                       )}
                       {kycData.kycStatus === 'verified' ? 'Verified' : 'Pending'}
                     </span>
@@ -246,7 +246,7 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
                   onClick={() => refetch()}
                   className="p-2 hover:bg-gray-100 rounded-lg text-gray-500"
                 >
-                  <Refresh size="18" />
+                  <Refresh size="18" color="currentColor" />
                 </button>
               </div>
             </DialogHeader>
@@ -255,45 +255,45 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
             <div className="py-4 space-y-1">
               <h3 className="text-sm font-medium text-gray-900 mb-3">User Information</h3>
               <InfoRow
-                icon={<UserIcon size="16" />}
+                icon={<UserIcon size="16" color="currentColor" />}
                 label="Full Name"
                 value={fullName}
               />
               <InfoRow
-                icon={<Sms size="16" />}
+                icon={<Sms size="16" color="currentColor" />}
                 label="Email"
                 value={kycData.email}
               />
               <InfoRow
-                icon={<Call size="16" />}
+                icon={<Call size="16" color="currentColor" />}
                 label="Phone"
                 value={kycData.phone}
               />
               <InfoRow
-                icon={<Location size="16" />}
+                icon={<Location size="16" color="currentColor" />}
                 label="Country"
                 value={kycData.country}
               />
               <InfoRow
-                icon={<Location size="16" />}
+                icon={<Location size="16" color="currentColor" />}
                 label="Location"
                 value={kycData.location}
               />
               <InfoRow
-                icon={<Calendar size="16" />}
+                icon={<Calendar size="16" color="currentColor" />}
                 label="Registered"
                 value={formatDate(kycData.createdAt)}
               />
               {kycData.verification?.submittedAt && (
                 <InfoRow
-                  icon={<Calendar size="16" />}
+                  icon={<Calendar size="16" color="currentColor" />}
                   label="KYC Submitted"
                   value={formatDate(kycData.verification.submittedAt)}
                 />
               )}
               {kycData.verification?.verificationId && (
                 <InfoRow
-                  icon={<ShieldTick size="16" />}
+                  icon={<ShieldTick size="16" color="currentColor" />}
                   label="Verification ID"
                   value={
                     <span className="font-mono text-xs">
@@ -331,9 +331,9 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
                     className="flex-1 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {rejectMutation.isPending ? (
-                      <Refresh size="16" className="animate-spin" />
+                      <Refresh size="16" color="currentColor" className="animate-spin" />
                     ) : (
-                      <CloseCircle size="16" />
+                      <CloseCircle size="16" color="currentColor" />
                     )}
                     Confirm Reject
                   </button>
@@ -348,7 +348,7 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
                   onClick={() => setShowRejectForm(true)}
                   className="flex-1 px-4 py-2.5 text-sm font-medium text-red-700 bg-red-50 rounded-lg hover:bg-red-100 flex items-center justify-center gap-2"
                 >
-                  <CloseCircle size="18" />
+                  <CloseCircle size="18" color="currentColor" />
                   Reject
                 </button>
                 <button
@@ -357,9 +357,9 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
                   className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {approveMutation.isPending ? (
-                    <Refresh size="18" className="animate-spin" />
+                    <Refresh size="18" color="currentColor" className="animate-spin" />
                   ) : (
-                    <TickCircle size="18" />
+                    <TickCircle size="18" color="currentColor" />
                   )}
                   Approve KYC
                 </button>
@@ -370,7 +370,7 @@ export function KycDetailModal({ userId, open, onOpenChange }: KycDetailModalPro
             {kycData.kycStatus === 'verified' && (
               <div className="pt-4 border-t border-gray-100">
                 <div className="flex items-center gap-2 text-green-600 bg-green-50 px-4 py-3 rounded-lg">
-                  <ShieldTick size="20" variant="Bold" />
+                  <ShieldTick size="20" color="currentColor" variant="Bold" />
                   <span className="text-sm font-medium">This user's KYC has been verified</span>
                 </div>
               </div>

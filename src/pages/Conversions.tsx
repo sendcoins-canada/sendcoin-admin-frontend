@@ -142,7 +142,7 @@ export default function Conversions() {
       {/* Platform fee (conversion) – at top */}
       <div className="mb-6 rounded-xl border border-gray-100 bg-white p-6">
         <div className="flex items-center gap-3 mb-2">
-          <DollarCircle size={22} className="text-gray-600" />
+          <DollarCircle size={22} color="currentColor" className="text-gray-600" />
           <h2 className="text-base font-semibold text-gray-900">Platform fee (conversion)</h2>
         </div>
         <p className="text-sm text-gray-500 mb-4">
@@ -150,7 +150,7 @@ export default function Conversions() {
         </p>
         {feeSettingsLoading ? (
           <div className="flex items-center gap-2 text-sm text-gray-500">
-            <Refresh size={16} className="animate-spin" />
+            <Refresh size={16} color="currentColor" className="animate-spin" />
             Loading...
           </div>
         ) : (
@@ -186,12 +186,12 @@ export default function Conversions() {
             >
               {updateFeeSettingsMutation.isPending ? (
                 <>
-                  <Refresh size={14} className="animate-spin" />
+                  <Refresh size={14} color="currentColor" className="animate-spin" />
                   Saving...
                 </>
               ) : (
                 <>
-                  <TickCircle size={14} />
+                  <TickCircle size={14} color="currentColor" />
                   Save
                 </>
               )}
@@ -210,7 +210,7 @@ export default function Conversions() {
           disabled={isFetching}
           className="p-2 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
         >
-          <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+          <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
         </button>
       </div>
 
@@ -218,7 +218,7 @@ export default function Conversions() {
       <div className="flex flex-wrap items-center gap-3 mb-4">
         {/* Search Input */}
         <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <SearchNormal1 size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <SearchNormal1 size={18} color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
             placeholder="Search by reference or email..."
@@ -356,7 +356,7 @@ export default function Conversions() {
                             className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                             title="View Details"
                           >
-                            <Eye size={16} />
+                            <Eye size={16} color="currentColor" />
                           </button>
 
                           {isPending && (
@@ -367,7 +367,7 @@ export default function Conversions() {
                                 title={!canVerifyConversion ? 'You need VERIFY_TRANSACTIONS permission.' : 'Approve'}
                                 className="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50"
                               >
-                                <TickCircle size={16} />
+                                <TickCircle size={16} color="currentColor" />
                               </button>
                               <button
                                 onClick={(e) => handleQuickReject(e, id)}
@@ -375,7 +375,7 @@ export default function Conversions() {
                                 title={!canVerifyConversion ? 'You need VERIFY_TRANSACTIONS permission.' : 'Reject'}
                                 className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                               >
-                                <CloseCircle size={16} />
+                                <CloseCircle size={16} color="currentColor" />
                               </button>
                             </>
                           )}

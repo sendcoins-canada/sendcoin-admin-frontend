@@ -183,7 +183,7 @@ export function MfaSetupModal({
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-              <ShieldTick className="h-5 w-5 text-blue-600" />
+              <ShieldTick className="text-blue-600"  size="20" color="currentColor" />
             </div>
             <DialogTitle className="text-lg font-semibold">
               {step === 'scan' && 'Set Up Two-Factor Authentication'}
@@ -207,7 +207,7 @@ export function MfaSetupModal({
                 }`}
               >
                 {['scan', 'verify', 'backup'].indexOf(step) > i ? (
-                  <TickCircle size={16} />
+                  <TickCircle size={16} color="currentColor" />
                 ) : (
                   i + 1
                 )}
@@ -258,9 +258,9 @@ export function MfaSetupModal({
                   title="Copy secret"
                 >
                   {copiedSecret ? (
-                    <TickCircle size={18} className="text-green-600" />
+                    <TickCircle size={18} color="currentColor" className="text-green-600" />
                   ) : (
-                    <Copy size={18} />
+                    <Copy size={18} color="currentColor" />
                   )}
                 </button>
               </div>
@@ -306,7 +306,7 @@ export function MfaSetupModal({
         {step === 'backup' && (
           <div className="py-4">
             <div className="flex items-start gap-3 p-4 bg-amber-50 border border-amber-200 rounded-lg mb-4">
-              <Warning2 size={20} className="text-amber-600 shrink-0 mt-0.5" />
+              <Warning2 size={20} color="currentColor" className="text-amber-600 shrink-0 mt-0.5" />
               <div className="text-sm">
                 <p className="font-medium text-amber-800">Save these backup codes</p>
                 <p className="text-amber-700 mt-1">
@@ -323,7 +323,7 @@ export function MfaSetupModal({
                   key={index}
                   className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg font-mono text-sm"
                 >
-                  <Key size={14} className="text-gray-400" />
+                  <Key size={14} color="currentColor" className="text-gray-400" />
                   {code}
                 </div>
               ))}
@@ -337,12 +337,12 @@ export function MfaSetupModal({
               >
                 {copiedBackupCodes ? (
                   <>
-                    <TickCircle size={16} className="text-green-600" />
+                    <TickCircle size={16} color="currentColor" className="text-green-600" />
                     Copied!
                   </>
                 ) : (
                   <>
-                    <Copy size={16} />
+                    <Copy size={16} color="currentColor" />
                     Copy All
                   </>
                 )}
@@ -395,7 +395,7 @@ export function MfaSetupModal({
               >
                 {isEnabling ? (
                   <>
-                    <Refresh className="h-4 w-4 animate-spin" />
+                    <Refresh className="animate-spin"  size="16" color="currentColor" />
                     Verifying...
                   </>
                 ) : (
@@ -411,7 +411,7 @@ export function MfaSetupModal({
               onClick={handleComplete}
               className="w-full px-4 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
             >
-              <TickCircle size={18} />
+              <TickCircle size={18} color="currentColor" />
               I've Saved My Backup Codes
             </button>
           )}

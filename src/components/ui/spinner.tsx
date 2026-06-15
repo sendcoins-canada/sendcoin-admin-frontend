@@ -7,7 +7,9 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
     <Refresh
       role="status"
       aria-label="Loading"
-      className={cn("size-4 animate-spin", className)}
+      size="16"
+      color="currentColor"
+      className={cn("animate-spin", className)}
       {...props}
     />
   );

@@ -36,7 +36,7 @@ const ResizableHandle = ({
   >
     {withHandle && (
       <div className="z-10 flex h-4 w-3 items-center justify-center rounded-sm border bg-border">
-        <Menu className="h-2.5 w-2.5 rotate-90" />
+        <Menu size="10" color="currentColor" className="rotate-90" />
       </div>
     )}
   </ResizablePrimitive.PanelResizeHandle>

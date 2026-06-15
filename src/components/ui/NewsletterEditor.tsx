@@ -220,7 +220,7 @@ export function NewsletterEditor({
 
         {/* Lists */}
         <Btn active={editor.isActive('bulletList')} onClick={() => editor.chain().focus().toggleBulletList().run()} title="Bullet list">
-          <Menu size={15} />
+          <Menu size={15} color="currentColor" />
         </Btn>
         <Btn active={editor.isActive('orderedList')} onClick={() => editor.chain().focus().toggleOrderedList().run()} title="Numbered list">
           1.
@@ -240,13 +240,13 @@ export function NewsletterEditor({
 
         {/* Insert */}
         <Btn onClick={setLink} active={editor.isActive('link')} title="Insert link">
-          <Link2 size={15} />
+          <Link2 size={15} color="currentColor" />
         </Btn>
         <Btn onClick={insertImage} title="Insert image">
-          <GalleryAdd size={15} />
+          <GalleryAdd size={15} color="currentColor" />
         </Btn>
         <Btn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Horizontal line">
-          <Minus size={15} />
+          <Minus size={15} color="currentColor" />
         </Btn>
 
         {/* Merge fields */}

@@ -194,7 +194,7 @@ export default function Merchants() {
           disabled={isFetching}
           className="p-2 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
         >
-          <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+          <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
         </button>
       </div>
 
@@ -300,7 +300,7 @@ export default function Merchants() {
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                          <Shop size={18} />
+                          <Shop size={18} color="currentColor" />
                         </div>
                         <div>
                           <p className="font-medium text-gray-900">{merchant.userName}</p>
@@ -354,7 +354,7 @@ export default function Merchants() {
                           className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="View Details"
                         >
-                          <Eye size={16} />
+                          <Eye size={16} color="currentColor" />
                         </button>
 
                         {merchant.verificationStatus === 'pending' && (
@@ -365,7 +365,7 @@ export default function Merchants() {
                               className="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50"
                               title="Approve"
                             >
-                              <TickCircle size={16} />
+                              <TickCircle size={16} color="currentColor" />
                             </button>
                             <button
                               onClick={(e) => handleReject(e, merchant.keychain)}
@@ -373,7 +373,7 @@ export default function Merchants() {
                               className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                               title="Reject"
                             >
-                              <CloseCircle size={16} />
+                              <CloseCircle size={16} color="currentColor" />
                             </button>
                           </>
                         )}
@@ -386,7 +386,7 @@ export default function Merchants() {
                               className="p-1.5 text-gray-500 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors disabled:opacity-50"
                               title="Suspend"
                             >
-                              <Danger size={16} />
+                              <Danger size={16} color="currentColor" />
                             </button>
                             <button
                               onClick={(e) =>
@@ -401,9 +401,9 @@ export default function Merchants() {
                               title={merchant.isActive ? 'Deactivate' : 'Activate'}
                             >
                               {merchant.isActive ? (
-                                <TickCircle size={16} />
+                                <TickCircle size={16} color="currentColor" />
                               ) : (
-                                <CloseCircle size={16} />
+                                <CloseCircle size={16} color="currentColor" />
                               )}
                             </button>
                           </>

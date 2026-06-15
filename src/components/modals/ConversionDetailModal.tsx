@@ -206,7 +206,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
       <DialogContent className="max-w-lg">
         {isLoading ? (
           <div className="flex items-center justify-center h-48">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh size="32" color="currentColor" className="animate-spin text-blue-600" />
           </div>
         ) : conversion ? (
           <>
@@ -214,7 +214,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
             <DialogHeader className="border-b border-gray-100 pb-4">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
-                  <ArrowSwapHorizontal size={24} />
+                  <ArrowSwapHorizontal size={24} color="currentColor" />
                 </div>
                 <div className="flex-1">
                   <DialogTitle className="text-lg">Conversion Details</DialogTitle>
@@ -227,7 +227,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                     </span>
                     {conversion.isFlagged && (
                       <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-50 text-orange-700">
-                        <Flag size={12} />
+                        <Flag size={12} color="currentColor" />
                         Flagged
                       </span>
                     )}
@@ -237,7 +237,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                   onClick={() => refetch()}
                   className="p-2 hover:bg-gray-100 rounded-lg text-gray-500"
                 >
-                  <Refresh size="18" />
+                  <Refresh size="18" color="currentColor" />
                 </button>
               </div>
             </DialogHeader>
@@ -253,7 +253,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                       {conversion.cryptoAmount || conversion.amount || '-'} {conversion.cryptoCurrency || ''}
                     </div>
                   </div>
-                  <ArrowSwapHorizontal size={20} className="text-gray-400" />
+                  <ArrowSwapHorizontal size={20} color="currentColor" className="text-gray-400" />
                   <div className="text-right">
                     <div className="text-xs text-gray-500">Fiat Amount</div>
                     <div className="text-lg font-semibold text-green-600">
@@ -272,13 +272,13 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
               <div className="space-y-1">
                 <h3 className="text-sm font-medium text-gray-900 mb-2">User Information</h3>
                 <InfoRow
-                  icon={<User size="16" />}
+                  icon={<User size="16" color="currentColor" />}
                   label="User"
                   value={conversion.userName || conversion.userEmail || `User ${conversion.userId}`}
                 />
                 {conversion.userEmail && (
                   <InfoRow
-                    icon={<User size="16" />}
+                    icon={<User size="16" color="currentColor" />}
                     label="Email"
                     value={conversion.userEmail}
                   />
@@ -289,17 +289,17 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
               <div className="space-y-1 border-t border-gray-100 pt-4">
                 <h3 className="text-sm font-medium text-gray-900 mb-2">Recipient Details</h3>
                 <InfoRow
-                  icon={<User size="16" />}
+                  icon={<User size="16" color="currentColor" />}
                   label="Recipient Name"
                   value={conversion.recipientName}
                 />
                 <InfoRow
-                  icon={<Bank size="16" />}
+                  icon={<Bank size="16" color="currentColor" />}
                   label="Bank"
                   value={conversion.bankName}
                 />
                 <InfoRow
-                  icon={<DollarCircle size="16" />}
+                  icon={<DollarCircle size="16" color="currentColor" />}
                   label="Account Number"
                   value={
                     <span className="font-mono">
@@ -308,7 +308,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                   }
                 />
                 <InfoRow
-                  icon={<DollarCircle size="16" />}
+                  icon={<DollarCircle size="16" color="currentColor" />}
                   label="Destination"
                   value={`${conversion.destinationCountry || '-'} (${conversion.currency || conversion.fiatCurrency || '-'})`}
                 />
@@ -317,27 +317,27 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
               {/* Timestamps */}
               <div className="space-y-1 border-t border-gray-100 pt-4">
                 <InfoRow
-                  icon={<Calendar size="16" />}
+                  icon={<Calendar size="16" color="currentColor" />}
                   label="Created"
                   value={formatDate(conversion.createdAt)}
                 />
                 {conversion.completedAt && (
                   <InfoRow
-                    icon={<Calendar size="16" />}
+                    icon={<Calendar size="16" color="currentColor" />}
                     label="Completed"
                     value={formatDate(conversion.completedAt)}
                   />
                 )}
                 {conversion.fee !== undefined && (
                   <InfoRow
-                    icon={<DollarCircle size="16" />}
+                    icon={<DollarCircle size="16" color="currentColor" />}
                     label="Fee"
                     value={formatAmount(conversion.fee, conversion.fiatCurrency || conversion.currency)}
                   />
                 )}
                 {conversion.txHash && (
                   <InfoRow
-                    icon={<TickCircle size="16" />}
+                    icon={<TickCircle size="16" color="currentColor" />}
                     label="Transaction Hash"
                     value={
                       <span className="font-mono text-xs break-all">{conversion.txHash}</span>
@@ -382,9 +382,9 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                     className="flex-1 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {approveMutation.isPending ? (
-                      <Refresh size="16" className="animate-spin" />
+                      <Refresh size="16" color="currentColor" className="animate-spin" />
                     ) : (
-                      <TickCircle size="16" />
+                      <TickCircle size="16" color="currentColor" />
                     )}
                     Confirm Approve
                   </button>
@@ -419,9 +419,9 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                     className="flex-1 px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 flex items-center justify-center gap-2"
                   >
                     {rejectMutation.isPending ? (
-                      <Refresh size="16" className="animate-spin" />
+                      <Refresh size="16" color="currentColor" className="animate-spin" />
                     ) : (
-                      <CloseCircle size="16" />
+                      <CloseCircle size="16" color="currentColor" />
                     )}
                     Confirm Reject
                   </button>
@@ -438,7 +438,7 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                   title={!canVerifyConversion ? 'You need VERIFY_TRANSACTIONS permission.' : undefined}
                   className="flex-1 px-4 py-2.5 text-sm font-medium text-red-700 bg-red-50 rounded-lg hover:bg-red-100 flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  <CloseCircle size="18" />
+                  <CloseCircle size="18" color="currentColor" />
                   Reject
                 </button>
                 <button
@@ -448,9 +448,9 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                   className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {approveMutation.isPending ? (
-                    <Refresh size="18" className="animate-spin" />
+                    <Refresh size="18" color="currentColor" className="animate-spin" />
                   ) : (
-                    <TickCircle size="18" />
+                    <TickCircle size="18" color="currentColor" />
                   )}
                   Approve
                 </button>
@@ -466,8 +466,8 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                     : 'text-red-600 bg-red-50'
                 }`}>
                   {conversion.status === 'completed'
-                    ? <TickCircle size="20" variant="Bold" />
-                    : <CloseCircle size="20" variant="Bold" />
+                    ? <TickCircle size="20" color="currentColor" variant="Bold" />
+                    : <CloseCircle size="20" color="currentColor" variant="Bold" />
                   }
                   <span className="text-sm font-medium">
                     This conversion has been {conversion.status}
@@ -500,9 +500,9 @@ export function ConversionDetailModal({ conversionId, open, onOpenChange }: Conv
                         className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
                       >
                         {updateHashMutation.isPending ? (
-                          <Refresh size="16" className="animate-spin" />
+                          <Refresh size="16" color="currentColor" className="animate-spin" />
                         ) : (
-                          <TickCircle size="16" />
+                          <TickCircle size="16" color="currentColor" />
                         )}
                         Save Hash
                       </button>

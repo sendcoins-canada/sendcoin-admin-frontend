@@ -43,12 +43,12 @@ const STATUS_COLORS: Record<TransactionStatus, { bg: string; text: string }> = {
 };
 
 const TYPE_ICONS: Record<TransactionType, React.ReactNode> = {
-  INCOMING: <ArrowDown size="12" />,
-  OUTGOING: <ArrowUp size="12" />,
-  CONVERSION: <ArrowSwapHorizontal size="12" />,
-  BUY: <ArrowDown size="12" />,
-  SELL: <ArrowUp size="12" />,
-  TRANSFER: <ArrowSwapHorizontal size="12" />,
+  INCOMING: <ArrowDown size="12" color="currentColor" />,
+  OUTGOING: <ArrowUp size="12" color="currentColor" />,
+  CONVERSION: <ArrowSwapHorizontal size="12" color="currentColor" />,
+  BUY: <ArrowDown size="12" color="currentColor" />,
+  SELL: <ArrowUp size="12" color="currentColor" />,
+  TRANSFER: <ArrowSwapHorizontal size="12" color="currentColor" />,
 };
 
 // =============================================================================
@@ -219,7 +219,7 @@ export default function Transactions() {
               disabled={isFetching}
               className="p-2 bg-gray-50 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
             >
-              <Refresh size="16" className={isFetching ? 'animate-spin' : ''} />
+              <Refresh size="16" color="currentColor" className={isFetching ? 'animate-spin' : ''} />
             </button>
             <button
               onClick={handleExport}
@@ -227,7 +227,7 @@ export default function Transactions() {
               title={!canExportTx ? 'You need EXPORT_TRANSACTIONS permission.' : undefined}
               className="px-4 py-2 bg-gray-50 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-100 transition-colors disabled:opacity-50"
             >
-              <DocumentDownload size="16" />
+              <DocumentDownload size="16" color="currentColor" />
               Export
             </button>
           </div>
@@ -343,7 +343,7 @@ export default function Transactions() {
                         } ${STATUS_COLORS[tx.status]?.text ?? 'text-gray-700'}`}
                       >
                         {tx.status}
-                        <ArrowDown2 size="10" />
+                        <ArrowDown2 size="10" color="currentColor" />
                       </div>
                     </td>
                     <td className="px-6 py-4">
@@ -387,7 +387,7 @@ export default function Transactions() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button className="p-1 hover:bg-gray-100 rounded-full text-gray-400">
-                        <RecordCircle size="16" />
+                        <RecordCircle size="16" color="currentColor" />
                       </button>
                     </td>
                   </tr>

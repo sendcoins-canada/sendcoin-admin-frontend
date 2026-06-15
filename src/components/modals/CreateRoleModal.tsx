@@ -181,7 +181,7 @@ export function CreateRoleModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600">
-              <ShieldTick size="20" />
+              <ShieldTick size="20" color="currentColor" />
             </div>
             Create New Role
           </DialogTitle>
@@ -189,7 +189,7 @@ export function CreateRoleModal({
 
         {permissionsLoading ? (
           <div className="flex items-center justify-center h-64">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh className="animate-spin text-blue-600"  size="32" color="currentColor" />
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
@@ -268,12 +268,12 @@ export function CreateRoleModal({
                           >
                             {allSelected ? (
                               <>
-                                <CloseSquare size="12" />
+                                <CloseSquare size="12" color="currentColor" />
                                 Deselect all
                               </>
                             ) : (
                               <>
-                                <TickSquare size="12" />
+                                <TickSquare size="12" color="currentColor" />
                                 Select all
                               </>
                             )}
@@ -328,12 +328,12 @@ export function CreateRoleModal({
               >
                 {createRoleMutation.isPending ? (
                   <>
-                    <Refresh className="w-4 h-4 animate-spin" />
+                    <Refresh className="animate-spin"  size="16" color="currentColor" />
                     Creating...
                   </>
                 ) : (
                   <>
-                    <Add size="16" />
+                    <Add size="16" color="currentColor" />
                     Create Role
                   </>
                 )}

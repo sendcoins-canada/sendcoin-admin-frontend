@@ -154,7 +154,7 @@ export default function KycQueue() {
           disabled={isFetching}
           className="p-2 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
         >
-          <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+          <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
         </button>
       </div>
 
@@ -162,7 +162,7 @@ export default function KycQueue() {
       <div className="flex flex-wrap items-center gap-3 mb-4">
         {/* Search Input */}
         <div className="relative flex-1 min-w-[200px] max-w-sm">
-          <SearchNormal1 size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <SearchNormal1 size={18} color="currentColor" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             type="text"
             placeholder="Search by name or email..."
@@ -299,7 +299,7 @@ export default function KycQueue() {
                             className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                             title="View Details"
                           >
-                            <Eye size={16} />
+                            <Eye size={16} color="currentColor" />
                           </button>
 
                           {isPending && (
@@ -310,7 +310,7 @@ export default function KycQueue() {
                                 title={!canVerifyKyc ? 'You need VERIFY_KYC permission.' : 'Approve KYC'}
                                 className="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors disabled:opacity-50"
                               >
-                                <TickCircle size={16} />
+                                <TickCircle size={16} color="currentColor" />
                               </button>
                               <button
                                 onClick={(e) => handleQuickReject(e, id)}
@@ -318,7 +318,7 @@ export default function KycQueue() {
                                 title={!canVerifyKyc ? 'You need VERIFY_KYC permission.' : 'Reject KYC'}
                                 className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                               >
-                                <CloseCircle size={16} />
+                                <CloseCircle size={16} color="currentColor" />
                               </button>
                             </>
                           )}

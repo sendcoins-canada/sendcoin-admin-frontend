@@ -134,10 +134,10 @@ export default function Wallets() {
             disabled={isFetching}
             className="p-2 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
           >
-            <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+            <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
           </button>
           <button className="px-4 py-2 bg-gray-50 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-100">
-            <DocumentDownload size={16} />
+            <DocumentDownload size={16} color="currentColor" />
             Export
           </button>
         </div>
@@ -307,7 +307,7 @@ export default function Wallets() {
                             title={!canFreezeWallets ? 'You need FREEZE_WALLETS permission.' : undefined}
                             className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-lg hover:bg-green-100 disabled:opacity-50"
                           >
-                            <Sun1 size={14} />
+                            <Sun1 size={14} color="currentColor" />
                             Unfreeze
                           </button>
                         ) : (
@@ -321,7 +321,7 @@ export default function Wallets() {
                             title={!canFreezeWallets ? 'You need FREEZE_WALLETS permission.' : undefined}
                             className="inline-flex items-center gap-1 px-2 py-1 text-xs font-medium text-amber-700 bg-amber-50 rounded-lg hover:bg-amber-100 disabled:opacity-50"
                           >
-                            <Sun1 size={14} />
+                            <Sun1 size={14} color="currentColor" />
                             Freeze
                           </button>
                         )

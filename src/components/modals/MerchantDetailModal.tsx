@@ -198,14 +198,14 @@ export function MerchantDetailModal({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <Shop size={24} className="text-purple-600" />
+            <Shop size={24} color="currentColor" className="text-purple-600" />
             Merchant Details
           </DialogTitle>
         </DialogHeader>
 
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+            <Refresh className="animate-spin text-blue-600"  size="32" color="currentColor" />
           </div>
         ) : !merchant ? (
           <div className="text-center py-12 text-gray-500">Merchant not found</div>
@@ -215,7 +215,7 @@ export function MerchantDetailModal({
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex items-center gap-4 mb-4">
                 <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                  <Shop size={32} />
+                  <Shop size={32} color="currentColor" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-gray-900">
@@ -250,28 +250,28 @@ export function MerchantDetailModal({
 
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center gap-2">
-                  <Sms size={16} className="text-gray-400" />
+                  <Sms size={16} color="currentColor" className="text-gray-400" />
                   <span className="text-gray-600">{merchant.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Call size={16} className="text-gray-400" />
+                  <Call size={16} color="currentColor" className="text-gray-400" />
                   <span className="text-gray-600">{merchant.phone || '-'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar size={16} className="text-gray-400" />
+                  <Calendar size={16} color="currentColor" className="text-gray-400" />
                   <span className="text-gray-600">
                     Joined: {formatDate(merchant.createdAt)}
                   </span>
                 </div>
                 {merchant.ipAddress && (
                   <div className="flex items-center gap-2">
-                    <Global size={16} className="text-gray-400" />
+                    <Global size={16} color="currentColor" className="text-gray-400" />
                     <span className="text-gray-600">{merchant.ipAddress}</span>
                   </div>
                 )}
                 {merchant.device && (
                   <div className="flex items-center gap-2 col-span-2">
-                    <Monitor size={16} className="text-gray-400" />
+                    <Monitor size={16} color="currentColor" className="text-gray-400" />
                     <span className="text-gray-600 text-xs">{merchant.device}</span>
                   </div>
                 )}
@@ -281,7 +281,7 @@ export function MerchantDetailModal({
             {/* Bank Details */}
             <div className="bg-blue-50 rounded-lg p-4">
               <h4 className="font-medium text-gray-900 mb-3 flex items-center gap-2">
-                <Bank size={18} className="text-blue-600" />
+                <Bank size={18} color="currentColor" className="text-blue-600" />
                 Bank Details
               </h4>
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -343,7 +343,7 @@ export function MerchantDetailModal({
               <h4 className="font-medium text-gray-900 mb-3">Recent Transactions</h4>
               {loadingTransactions ? (
                 <div className="flex justify-center py-4">
-                  <Refresh className="w-5 h-5 animate-spin text-gray-400" />
+                  <Refresh className="animate-spin text-gray-400"  size="20" color="currentColor" />
                 </div>
               ) : transactions.length === 0 ? (
                 <p className="text-sm text-gray-500 text-center py-4">
@@ -396,14 +396,14 @@ export function MerchantDetailModal({
                         disabled={approveMutation.isPending}
                         className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
                       >
-                        <TickCircle size={18} />
+                        <TickCircle size={18} color="currentColor" />
                         Approve Merchant
                       </button>
                       <button
                         onClick={() => setShowRejectForm(true)}
                         className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                       >
-                        <CloseCircle size={18} />
+                        <CloseCircle size={18} color="currentColor" />
                         Reject Merchant
                       </button>
                     </div>
@@ -459,7 +459,7 @@ export function MerchantDetailModal({
                         onClick={() => setShowSuspendForm(true)}
                         className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700"
                       >
-                        <Danger size={18} />
+                        <Danger size={18} color="currentColor" />
                         Suspend
                       </button>
                     </div>

@@ -177,7 +177,7 @@ export default function SetupPassword() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
             >
-              {showPassword ? <EyeSlash size="20" /> : <Eye size="20" />}
+              {showPassword ? <EyeSlash size="20" color="currentColor" /> : <Eye size="20" color="currentColor" />}
             </button>
           </div>
 
@@ -199,7 +199,7 @@ export default function SetupPassword() {
                 onClick={() => setShowConfirm(!showConfirm)}
                 className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
               >
-                {showConfirm ? <EyeSlash size="20" /> : <Eye size="20" />}
+                {showConfirm ? <EyeSlash size="20" color="currentColor" /> : <Eye size="20" color="currentColor" />}
               </button>
             </div>
           )}
@@ -213,7 +213,7 @@ export default function SetupPassword() {
             ].map((req, i) => (
               <div key={i} className="flex items-center gap-3 text-sm text-gray-500">
                 <div className="w-4 h-4 rounded-full bg-purple-100 flex items-center justify-center">
-                  <TickCircle size="12" variant="Bold" className="text-purple-600" />
+                  <TickCircle size="12" color="currentColor" variant="Bold" className="text-purple-600" />
                 </div>
                 <span>{req}</span>
               </div>

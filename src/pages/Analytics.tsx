@@ -216,10 +216,10 @@ export default function Analytics() {
             disabled={isFetching}
             className="p-2 bg-gray-50 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
           >
-            <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+            <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
           </button>
           <button className="px-4 py-2 bg-gray-50 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-100 transition-colors">
-            <DocumentDownload size={16} />
+            <DocumentDownload size={16} color="currentColor" />
             Export
           </button>
         </div>
@@ -237,10 +237,10 @@ export default function Analytics() {
             <div className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                  <ArrowSwapHorizontal size={20} className="text-blue-600" />
+                  <ArrowSwapHorizontal size={20} color="currentColor" className="text-blue-600" />
                 </div>
                 <span className="flex items-center gap-1 text-green-600 text-xs font-medium">
-                  <TrendUp size={14} />
+                  <TrendUp size={14} color="currentColor" />
                   +12%
                 </span>
               </div>
@@ -252,10 +252,10 @@ export default function Analytics() {
             <div className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                  <DollarCircle size={20} className="text-green-600" />
+                  <DollarCircle size={20} color="currentColor" className="text-green-600" />
                 </div>
                 <span className="flex items-center gap-1 text-green-600 text-xs font-medium">
-                  <TrendUp size={14} />
+                  <TrendUp size={14} color="currentColor" />
                   +8%
                 </span>
               </div>
@@ -269,10 +269,10 @@ export default function Analytics() {
             <div className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                  <People size={20} className="text-purple-600" />
+                  <People size={20} color="currentColor" className="text-purple-600" />
                 </div>
                 <span className="flex items-center gap-1 text-green-600 text-xs font-medium">
-                  <TrendUp size={14} />
+                  <TrendUp size={14} color="currentColor" />
                   +{newUsers}
                 </span>
               </div>
@@ -284,10 +284,10 @@ export default function Analytics() {
             <div className="bg-white rounded-xl border border-gray-100 p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                  <Chart2 size={20} className="text-yellow-600" />
+                  <Chart2 size={20} color="currentColor" className="text-yellow-600" />
                 </div>
                 <span className="flex items-center gap-1 text-red-600 text-xs font-medium">
-                  <TrendDown size={14} />
+                  <TrendDown size={14} color="currentColor" />
                   -3%
                 </span>
               </div>
@@ -303,7 +303,7 @@ export default function Analytics() {
             {/* Transaction Analytics chart */}
             <div className="bg-white rounded-xl border border-gray-100 p-5 space-y-4">
               <h3 className="font-medium text-gray-900 flex items-center gap-2">
-                <ArrowSwapHorizontal size={18} className="text-blue-600" />
+                <ArrowSwapHorizontal size={18} color="currentColor" className="text-blue-600" />
                 Transaction Analytics
               </h3>
               {txTimeSeries.length === 0 ? (
@@ -348,7 +348,7 @@ export default function Analytics() {
             {/* User registrations chart */}
             <div className="bg-white rounded-xl border border-gray-100 p-5 space-y-4">
               <h3 className="font-medium text-gray-900 flex items-center gap-2">
-                <People size={18} className="text-purple-600" />
+                <People size={18} color="currentColor" className="text-purple-600" />
                 User Analytics
               </h3>
               {registrationSeries.length === 0 ? (
@@ -386,7 +386,7 @@ export default function Analytics() {
             {/* Revenue Analytics chart */}
             <div className="bg-white rounded-xl border border-gray-100 p-5 space-y-4 lg:col-span-2">
               <h3 className="font-medium text-gray-900 flex items-center gap-2">
-                <DollarCircle size={18} className="text-green-600" />
+                <DollarCircle size={18} color="currentColor" className="text-green-600" />
                 Revenue Analytics
               </h3>
               {revData?.message ? (
@@ -436,7 +436,7 @@ export default function Analytics() {
           <div className="bg-white rounded-xl border border-gray-100 p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-medium text-gray-900 flex items-center gap-2">
-                <People size={18} className="text-blue-600" />
+                <People size={18} color="currentColor" className="text-blue-600" />
                 Top Users by Volume
               </h3>
               <span className="text-xs text-gray-500">Last {dateRange} days</span>

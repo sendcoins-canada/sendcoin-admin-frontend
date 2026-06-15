@@ -135,7 +135,7 @@ export function MfaVerificationModal({
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center">
-              <ShieldTick className="h-5 w-5 text-amber-600" />
+              <ShieldTick className="text-amber-600"  size="20" color="currentColor" />
             </div>
             <DialogTitle className="text-lg font-semibold">
               MFA Verification Required
@@ -206,7 +206,7 @@ export function MfaVerificationModal({
           >
             {isLoading ? (
               <>
-                <Refresh className="h-4 w-4 animate-spin" />
+                <Refresh className="animate-spin"  size="16" color="currentColor" />
                 Verifying...
               </>
             ) : (

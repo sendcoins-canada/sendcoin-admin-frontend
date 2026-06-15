@@ -340,7 +340,7 @@ export default function Settings() {
           }`}
         >
           <div className="flex items-center gap-2">
-            <Setting2 size={18} />
+            <Setting2 size={18} color="currentColor" />
             System Settings
           </div>
         </button>
@@ -353,7 +353,7 @@ export default function Settings() {
           }`}
         >
           <div className="flex items-center gap-2">
-            <Lock size={18} />
+            <Lock size={18} color="currentColor" />
             Security
           </div>
         </button>
@@ -365,7 +365,7 @@ export default function Settings() {
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <Setting2 size={24} className="text-gray-600" />
+              <Setting2 size={24} color="currentColor" className="text-gray-600" />
               <p className="text-gray-500 text-sm">
                 Manage system-wide configuration settings
               </p>
@@ -375,7 +375,7 @@ export default function Settings() {
                 onClick={() => setShowCreateForm(true)}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
               >
-                <Add size={18} />
+                <Add size={18} color="currentColor" />
                 Add Setting
               </button>
               <button
@@ -383,7 +383,7 @@ export default function Settings() {
                 disabled={isFetching}
                 className="p-2 rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-100"
               >
-                <Refresh size={18} className={isFetching ? 'animate-spin' : ''} />
+                <Refresh size={18} color="currentColor" className={isFetching ? 'animate-spin' : ''} />
               </button>
             </div>
           </div>
@@ -473,11 +473,11 @@ export default function Settings() {
           <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
             {isLoading ? (
               <div className="flex items-center justify-center h-64">
-                <Refresh className="w-8 h-8 animate-spin text-blue-600" />
+                <Refresh size="32" color="currentColor" className="animate-spin text-blue-600" />
               </div>
             ) : settings.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-64 text-gray-500">
-                <Setting2 size={48} className="mb-2 opacity-50" />
+                <Setting2 size={48} color="currentColor" className="mb-2 opacity-50" />
                 <p>No settings found</p>
                 <button
                   onClick={() => setShowCreateForm(true)}
@@ -531,13 +531,13 @@ export default function Settings() {
                                 disabled={updateMutation.isPending}
                                 className="p-1 text-green-600 hover:bg-green-50 rounded"
                               >
-                                <TickCircle size={18} />
+                                <TickCircle size={18} color="currentColor" />
                               </button>
                               <button
                                 onClick={handleCancel}
                                 className="p-1 text-red-600 hover:bg-red-50 rounded"
                               >
-                                <CloseCircle size={18} />
+                                <CloseCircle size={18} color="currentColor" />
                               </button>
                             </div>
                           ) : (
@@ -570,7 +570,7 @@ export default function Settings() {
                                 className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                                 title="Edit"
                               >
-                                <Edit2 size={16} />
+                                <Edit2 size={16} color="currentColor" />
                               </button>
                               <button
                                 onClick={() => handleDelete(setting.settingKey)}
@@ -578,7 +578,7 @@ export default function Settings() {
                                 className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                                 title="Delete"
                               >
-                                <Trash size={16} />
+                                <Trash size={16} color="currentColor" />
                               </button>
                             </div>
                           )}
@@ -611,9 +611,9 @@ export default function Settings() {
                     }`}
                   >
                     {mfaEnabled ? (
-                      <ShieldTick size={24} className="text-green-600" />
+                      <ShieldTick size={24} color="currentColor" className="text-green-600" />
                     ) : (
-                      <ShieldCross size={24} className="text-gray-400" />
+                      <ShieldCross size={24} color="currentColor" className="text-gray-400" />
                     )}
                   </div>
                   <div>
@@ -627,12 +627,12 @@ export default function Settings() {
                     <div className="mt-3">
                       {mfaEnabled ? (
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">
-                          <TickCircle size={14} />
+                          <TickCircle size={14} color="currentColor" />
                           Enabled
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-100 text-amber-700 text-sm font-medium rounded-full">
-                          <Warning2 size={14} />
+                          <Warning2 size={14} color="currentColor" />
                           Not Enabled
                         </span>
                       )}
@@ -657,12 +657,12 @@ export default function Settings() {
                     >
                       {setupMutation.isPending ? (
                         <>
-                          <Refresh className="h-4 w-4 animate-spin" />
+                          <Refresh size="16" color="currentColor" className="animate-spin" />
                           Setting up...
                         </>
                       ) : (
                         <>
-                          <ShieldTick size={18} />
+                          <ShieldTick size={18} color="currentColor" />
                           Enable 2FA
                         </>
                       )}
@@ -677,7 +677,7 @@ export default function Settings() {
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-4">
                       <div className="h-10 w-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                        <Key size={20} className="text-gray-500" />
+                        <Key size={20} color="currentColor" className="text-gray-500" />
                       </div>
                       <div>
                         <h4 className="text-sm font-medium text-gray-900">Backup Codes</h4>
@@ -694,12 +694,12 @@ export default function Settings() {
                     >
                       {isLoadingBackupCodes ? (
                         <>
-                          <Refresh className="h-4 w-4 animate-spin" />
+                          <Refresh size="16" color="currentColor" className="animate-spin" />
                           Generating...
                         </>
                       ) : (
                         <>
-                          <Refresh size={16} />
+                          <Refresh size={16} color="currentColor" />
                           Regenerate Codes
                         </>
                       )}
@@ -715,19 +715,19 @@ export default function Settings() {
             <h3 className="text-sm font-semibold text-blue-900 mb-3">Security Recommendations</h3>
             <ul className="space-y-2 text-sm text-blue-800">
               <li className="flex items-start gap-2">
-                <TickCircle size={16} className="text-blue-600 shrink-0 mt-0.5" />
+                <TickCircle size={16} color="currentColor" className="text-blue-600 shrink-0 mt-0.5" />
                 <span>Use a strong, unique password for your account</span>
               </li>
               <li className="flex items-start gap-2">
-                <TickCircle size={16} className="text-blue-600 shrink-0 mt-0.5" />
+                <TickCircle size={16} color="currentColor" className="text-blue-600 shrink-0 mt-0.5" />
                 <span>Enable two-factor authentication for enhanced security</span>
               </li>
               <li className="flex items-start gap-2">
-                <TickCircle size={16} className="text-blue-600 shrink-0 mt-0.5" />
+                <TickCircle size={16} color="currentColor" className="text-blue-600 shrink-0 mt-0.5" />
                 <span>Store your backup codes in a secure location</span>
               </li>
               <li className="flex items-start gap-2">
-                <TickCircle size={16} className="text-blue-600 shrink-0 mt-0.5" />
+                <TickCircle size={16} color="currentColor" className="text-blue-600 shrink-0 mt-0.5" />
                 <span>Never share your authentication codes with anyone</span>
               </li>
             </ul>
@@ -755,7 +755,7 @@ export default function Settings() {
           <div className="relative bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
-                <Trash size={20} className="text-red-600" />
+                <Trash size={20} color="currentColor" className="text-red-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">Disable 2FA</h3>
             </div>
@@ -802,7 +802,7 @@ export default function Settings() {
               >
                 {disableMutation.isPending ? (
                   <>
-                    <Refresh className="h-4 w-4 animate-spin" />
+                    <Refresh size="16" color="currentColor" className="animate-spin" />
                     Disabling...
                   </>
                 ) : (
@@ -824,13 +824,13 @@ export default function Settings() {
           <div className="relative bg-white rounded-xl p-6 max-w-md w-full mx-4 shadow-xl">
             <div className="flex items-center gap-3 mb-4">
               <div className="h-10 w-10 rounded-full bg-amber-100 flex items-center justify-center">
-                <Key size={20} className="text-amber-600" />
+                <Key size={20} color="currentColor" className="text-amber-600" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900">New Backup Codes</h3>
             </div>
 
             <div className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-200 rounded-lg mb-4">
-              <Warning2 size={18} className="text-amber-600 shrink-0 mt-0.5" />
+              <Warning2 size={18} color="currentColor" className="text-amber-600 shrink-0 mt-0.5" />
               <p className="text-sm text-amber-800">
                 Your previous backup codes are now invalid. Save these new codes securely.
               </p>
@@ -842,7 +842,7 @@ export default function Settings() {
                   key={index}
                   className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg font-mono text-sm"
                 >
-                  <Key size={14} className="text-gray-400" />
+                  <Key size={14} color="currentColor" className="text-gray-400" />
                   {code}
                 </div>
               ))}
@@ -855,12 +855,12 @@ export default function Settings() {
               >
                 {copiedBackupCodes ? (
                   <>
-                    <TickCircle size={16} className="text-green-600" />
+                    <TickCircle size={16} color="currentColor" className="text-green-600" />
                     Copied!
                   </>
                 ) : (
                   <>
-                    <Copy size={16} />
+                    <Copy size={16} color="currentColor" />
                     Copy All
                   </>
                 )}
@@ -877,7 +877,7 @@ export default function Settings() {
               onClick={() => setShowBackupCodes(false)}
               className="w-full px-4 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 flex items-center justify-center gap-2"
             >
-              <TickCircle size={18} />
+              <TickCircle size={18} color="currentColor" />
               I've Saved My Codes
             </button>
           </div>

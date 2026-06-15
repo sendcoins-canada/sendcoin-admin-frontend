@@ -46,11 +46,11 @@ function BlockItem({ block, index, total, onUpdate, onRemove, onMove }: {
         </span>
         <div className="flex items-center gap-0.5">
           <button type="button" disabled={index === 0} onClick={() => onMove(index, -1)}
-            className="p-1 rounded hover:bg-gray-200 disabled:opacity-30" title="Move up"><ArrowUp2 size={13} /></button>
+            className="p-1 rounded hover:bg-gray-200 disabled:opacity-30" title="Move up"><ArrowUp2 size={13} color="currentColor" /></button>
           <button type="button" disabled={index === total - 1} onClick={() => onMove(index, 1)}
-            className="p-1 rounded hover:bg-gray-200 disabled:opacity-30" title="Move down"><ArrowDown2 size={13} /></button>
+            className="p-1 rounded hover:bg-gray-200 disabled:opacity-30" title="Move down"><ArrowDown2 size={13} color="currentColor" /></button>
           <button type="button" onClick={() => onRemove(index)}
-            className="p-1 rounded hover:bg-red-50 text-red-500" title="Remove"><Trash size={13} /></button>
+            className="p-1 rounded hover:bg-red-50 text-red-500" title="Remove"><Trash size={13} color="currentColor" /></button>
         </div>
       </div>
 
@@ -66,7 +66,7 @@ function BlockItem({ block, index, total, onUpdate, onRemove, onMove }: {
               placeholder="Paste image URL or upload below"
               className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
             <label className="flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-100 cursor-pointer transition-colors shrink-0">
-              <GalleryAdd size={14} /> Upload
+              <GalleryAdd size={14} color="currentColor" /> Upload
               <input type="file" accept="image/*" className="hidden"
                 onChange={async (e) => {
                   const file = e.target.files?.[0];
@@ -168,11 +168,11 @@ function SectionCard({ section, index, total, onUpdate, onRemove, onMove }: {
         <span className="text-sm font-semibold text-gray-600">Section {index + 1}</span>
         <div className="flex items-center gap-1">
           <button type="button" disabled={index === 0} onClick={() => onMove(index, -1)}
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-30" title="Move section up"><ArrowUp2 size={16} /></button>
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-30" title="Move section up"><ArrowUp2 size={16} color="currentColor" /></button>
           <button type="button" disabled={index === total - 1} onClick={() => onMove(index, 1)}
-            className="p-1 rounded hover:bg-gray-100 disabled:opacity-30" title="Move section down"><ArrowDown2 size={16} /></button>
+            className="p-1 rounded hover:bg-gray-100 disabled:opacity-30" title="Move section down"><ArrowDown2 size={16} color="currentColor" /></button>
           <button type="button" onClick={() => onRemove(index)}
-            className="p-1 rounded hover:bg-red-50 text-red-500" title="Remove section"><Trash size={16} /></button>
+            className="p-1 rounded hover:bg-red-50 text-red-500" title="Remove section"><Trash size={16} color="currentColor" /></button>
         </div>
       </div>
 
@@ -208,11 +208,11 @@ function SectionCard({ section, index, total, onUpdate, onRemove, onMove }: {
       <div className="flex items-center gap-2">
         <button type="button" onClick={() => addBlock('text')}
           className="flex items-center gap-1.5 rounded-md border border-dashed border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors">
-          <TextBlock size={13} /> Add Text
+          <TextBlock size={13} color="currentColor" /> Add Text
         </button>
         <button type="button" onClick={() => addBlock('image')}
           className="flex items-center gap-1.5 rounded-md border border-dashed border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-600 hover:border-blue-400 hover:text-blue-600 transition-colors">
-          <GalleryAdd size={13} /> Add Image
+          <GalleryAdd size={13} color="currentColor" /> Add Image
         </button>
       </div>
     </div>
@@ -487,7 +487,7 @@ export default function Newsletter() {
                   placeholder="Paste image URL or upload"
                   className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none" />
                 <label className="flex items-center gap-1.5 rounded-md bg-blue-50 px-3 py-2 text-xs font-medium text-blue-700 hover:bg-blue-100 cursor-pointer transition-colors shrink-0">
-                  <GalleryAdd size={14} /> Upload
+                  <GalleryAdd size={14} color="currentColor" /> Upload
                   <input type="file" accept="image/*" className="hidden"
                     onChange={async (e) => {
                       const file = e.target.files?.[0];
@@ -534,7 +534,7 @@ export default function Newsletter() {
               <h3 className="text-sm font-semibold text-gray-700">Sections *</h3>
               <button type="button" onClick={() => setSections((prev) => [...prev, newSection()])}
                 className="flex items-center gap-1 rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-200 transition-colors">
-                <Add size={14} /> Add Section
+                <Add size={14} color="currentColor" /> Add Section
               </button>
             </div>
             {sections.length === 0 && (
@@ -542,7 +542,7 @@ export default function Newsletter() {
                 <p className="text-sm text-gray-400 mb-3">No sections yet.</p>
                 <button type="button" onClick={() => setSections([newSection()])}
                   className="inline-flex items-center gap-2 rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                  <Add size={16} /> Add Section
+                  <Add size={16} color="currentColor" /> Add Section
                 </button>
               </div>
             )}
@@ -592,11 +592,11 @@ export default function Newsletter() {
               <div className="flex items-center gap-1 rounded-md border border-gray-200 p-0.5">
                 <button type="button" onClick={() => setPreviewWidth('desktop')}
                   className={`flex items-center gap-1 rounded px-2 py-1 text-xs font-medium transition-colors ${previewWidth === 'desktop' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}>
-                  <Monitor size={14} /> Desktop
+                  <Monitor size={14} color="currentColor" /> Desktop
                 </button>
                 <button type="button" onClick={() => setPreviewWidth('mobile')}
                   className={`flex items-center gap-1 rounded px-2 py-1 text-xs font-medium transition-colors ${previewWidth === 'mobile' ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'}`}>
-                  <Mobile size={14} /> Mobile
+                  <Mobile size={14} color="currentColor" /> Mobile
                 </button>
               </div>
             </div>
@@ -607,7 +607,7 @@ export default function Newsletter() {
                   style={{ minHeight: '600px', height: '80vh' }} sandbox="allow-same-origin" />
               ) : (
                 <div className="flex flex-col items-center justify-center py-24 text-gray-400">
-                  <Eye size={40} variant="Bulk" />
+                  <Eye size={40} color="currentColor" variant="Bulk" />
                   <p className="mt-3 text-sm">Start adding content to see a live preview</p>
                 </div>
               )}

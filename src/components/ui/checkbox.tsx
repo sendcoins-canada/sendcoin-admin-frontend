@@ -19,7 +19,7 @@ const Checkbox = React.forwardRef<
     <CheckboxPrimitive.Indicator
       className={cn("grid place-content-center text-current")}
     >
-      <TickSquare className="h-4 w-4" />
+      <TickSquare size="16" color="currentColor" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ));

@@ -37,12 +37,12 @@ interface AuditLogFilters {
 // =============================================================================
 
 const RESOURCE_TYPE_CONFIG: Record<string, { icon: React.ReactNode; color: string; label: string }> = {
-  USER: { icon: <User size="14" />, color: 'text-blue-600 bg-blue-100', label: 'User' },
-  TRANSACTION: { icon: <ArrowSwapHorizontal size="14" />, color: 'text-green-600 bg-green-100', label: 'Transaction' },
-  ADMIN: { icon: <Shield size="14" />, color: 'text-purple-600 bg-purple-100', label: 'Admin' },
-  WALLET: { icon: <Wallet size="14" />, color: 'text-orange-600 bg-orange-100', label: 'Wallet' },
-  SETTINGS: { icon: <Setting2 size="14" />, color: 'text-gray-600 bg-gray-100', label: 'Settings' },
-  ROLE: { icon: <Shield size="14" />, color: 'text-indigo-600 bg-indigo-100', label: 'Role' },
+  USER: { icon: <User size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100', label: 'User' },
+  TRANSACTION: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-green-600 bg-green-100', label: 'Transaction' },
+  ADMIN: { icon: <Shield size="14" color="currentColor" />, color: 'text-purple-600 bg-purple-100', label: 'Admin' },
+  WALLET: { icon: <Wallet size="14" color="currentColor" />, color: 'text-orange-600 bg-orange-100', label: 'Wallet' },
+  SETTINGS: { icon: <Setting2 size="14" color="currentColor" />, color: 'text-gray-600 bg-gray-100', label: 'Settings' },
+  ROLE: { icon: <Shield size="14" color="currentColor" />, color: 'text-indigo-600 bg-indigo-100', label: 'Role' },
 };
 
 const ACTION_TABS = [
@@ -217,14 +217,14 @@ export default function AuditLogs() {
             disabled={isFetching}
             className="p-2 bg-gray-50 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
           >
-            <Refresh size="16" className={isFetching ? 'animate-spin' : ''} />
+            <Refresh size="16" color="currentColor" className={isFetching ? 'animate-spin' : ''} />
           </button>
           <button
             onClick={handleExport}
             disabled={exportMutation.isPending}
             className="px-4 py-2 bg-gray-50 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-100 transition-colors"
           >
-            <DocumentDownload size="16" />
+            <DocumentDownload size="16" color="currentColor" />
             Export
           </button>
         </div>
@@ -293,7 +293,7 @@ export default function AuditLogs() {
                       </div>
                       <div className="flex items-center gap-4 text-xs text-gray-400">
                         <div className="flex items-center gap-1">
-                          <Timer size="12" />
+                          <Timer size="12" color="currentColor" />
                           {formatRelativeTime(log.createdAt)}
                         </div>
                         <span>{log.ip}</span>
@@ -310,7 +310,7 @@ export default function AuditLogs() {
                         onClick={() => setSelectedLog(selectedLog === log.id ? null : log.id)}
                         className="p-2 hover:bg-gray-100 rounded-lg text-gray-400"
                       >
-                        <Eye size="16" />
+                        <Eye size="16" color="currentColor" />
                       </button>
                     </div>
                   </div>

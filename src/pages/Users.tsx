@@ -41,11 +41,11 @@ const STATUS_COLORS: Record<UserStatus, { bg: string; text: string }> = {
 };
 
 const KYC_CONFIG: Record<KycStatus, { color: string; icon: React.ReactNode; label: string }> = {
-  VERIFIED: { color: 'text-green-600', icon: <ShieldTick size="14" variant="Bold" />, label: 'Verified' },
-  PENDING: { color: 'text-yellow-600', icon: <Clock size="14" variant="Bold" />, label: 'Pending' },
-  NOT_STARTED: { color: 'text-gray-400', icon: <ShieldCross size="14" variant="Bold" />, label: 'Not Started' },
-  REJECTED: { color: 'text-red-600', icon: <Warning2 size="14" variant="Bold" />, label: 'Rejected' },
-  EXPIRED: { color: 'text-orange-600', icon: <Clock size="14" variant="Bold" />, label: 'Expired' },
+  VERIFIED: { color: 'text-green-600', icon: <ShieldTick size="14" color="currentColor" variant="Bold" />, label: 'Verified' },
+  PENDING: { color: 'text-yellow-600', icon: <Clock size="14" color="currentColor" variant="Bold" />, label: 'Pending' },
+  NOT_STARTED: { color: 'text-gray-400', icon: <ShieldCross size="14" color="currentColor" variant="Bold" />, label: 'Not Started' },
+  REJECTED: { color: 'text-red-600', icon: <Warning2 size="14" color="currentColor" variant="Bold" />, label: 'Rejected' },
+  EXPIRED: { color: 'text-orange-600', icon: <Clock size="14" color="currentColor" variant="Bold" />, label: 'Expired' },
 };
 
 // =============================================================================
@@ -229,7 +229,7 @@ export default function Users() {
             disabled={isFetching}
             className="p-2 bg-gray-50 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
           >
-            <Refresh size="16" className={isFetching ? 'animate-spin' : ''} />
+            <Refresh size="16" color="currentColor" className={isFetching ? 'animate-spin' : ''} />
           </button>
           <button
             onClick={handleExport}
@@ -237,7 +237,7 @@ export default function Users() {
             title={!canExportUsers ? 'You need EXPORT_DATA permission to export users.' : undefined}
             className="px-4 py-2 bg-gray-50 rounded-lg text-sm font-medium text-gray-600 flex items-center gap-2 hover:bg-gray-100 transition-colors disabled:opacity-50"
           >
-            <DocumentDownload size="16" />
+            <DocumentDownload size="16" color="currentColor" />
             Export
           </button>
           <button
@@ -245,7 +245,7 @@ export default function Users() {
             title="Coming soon – users register via the platform"
             className="px-4 py-2 bg-gray-200 text-gray-500 text-sm font-medium rounded-full flex items-center gap-2 cursor-not-allowed"
           >
-            <Add size="16" />
+            <Add size="16" color="currentColor" />
             Add new user
           </button>
         </div>
@@ -376,7 +376,7 @@ export default function Users() {
                       } ${STATUS_COLORS[user.status]?.text ?? 'text-gray-700'}`}
                     >
                       {user.status}
-                      <ArrowDown2 size="10" />
+                      <ArrowDown2 size="10" color="currentColor" />
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-600">
@@ -390,7 +390,7 @@ export default function Users() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <button className="p-1 hover:bg-gray-100 rounded-full text-gray-400">
-                      <RecordCircle size="16" />
+                      <RecordCircle size="16" color="currentColor" />
                     </button>
                   </td>
                 </tr>

@@ -69,7 +69,7 @@ const PaginationPrevious = ({
     className={cn("gap-1 pl-2.5", className)}
     {...props}
   >
-    <ArrowLeft2 className="h-4 w-4" />
+    <ArrowLeft2 size="16" color="currentColor" />
     <span>Previous</span>
   </PaginationLink>
 );
@@ -86,7 +86,7 @@ const PaginationNext = ({
     {...props}
   >
     <span>Next</span>
-    <ArrowRight2 className="h-4 w-4" />
+    <ArrowRight2 size="16" color="currentColor" />
   </PaginationLink>
 );
 PaginationNext.displayName = "PaginationNext";
@@ -100,7 +100,7 @@ const PaginationEllipsis = ({
     className={cn("flex h-9 w-9 items-center justify-center", className)}
     {...props}
   >
-    <More className="h-4 w-4" />
+    <More size="16" color="currentColor" />
     <span className="sr-only">More pages</span>
   </span>
 );
