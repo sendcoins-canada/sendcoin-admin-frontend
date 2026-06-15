@@ -316,7 +316,7 @@ export default function Dashboard() {
 
         {/* Wallets & Revenue Section (platform-level, gated by MANAGE_PLATFORM permission) */}
         {canManagePlatform && (
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Fee Wallet */}
           {platformBalance?.feeWallet && (
             <BalanceCard
@@ -326,6 +326,43 @@ export default function Dashboard() {
               icon={<WalletMoney size="18" color="currentColor" className="text-green-600" />}
               iconBg="bg-green-100"
             />
+          )}
+
+          {/* Total User Fiat Balance */}
+          {platformBalance?.totalUserFiat && (
+            <div className="bg-white rounded-xl border border-gray-100 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <WalletMoney size="18" color="currentColor" className="text-blue-600" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500">Total User Fiat</div>
+                  <div className="text-xl font-bold text-gray-900">
+                    {formatNaira(platformBalance.totalUserFiat.totalBalance)}
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                {platformBalance.totalUserFiat.balances.map((b) => (
+                  <div key={b.currency} className="flex items-center justify-between text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-600">
+                        {b.currency.slice(0, 2)}
+                      </div>
+                      <span className="text-gray-600">{b.currency}</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900">{formatNaira(b.availableBalance)}</div>
+                      <div className="text-xs text-gray-400">{b.userCount} user{b.userCount !== 1 ? 's' : ''}</div>
+                    </div>
+                  </div>
+                ))}
+                <div className="pt-2 border-t border-gray-50 flex items-center justify-between text-xs text-gray-400">
+                  <span>Across {platformBalance.totalUserFiat.totalUsers} user{platformBalance.totalUserFiat.totalUsers !== 1 ? 's' : ''}</span>
+                  <span>All currencies</span>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Hot Wallet */}

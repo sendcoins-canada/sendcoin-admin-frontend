@@ -37,6 +37,16 @@ export interface PlatformBalance {
     }>;
     totalUsd: string;
   };
+  totalUserFiat?: {
+    totalBalance: string;
+    totalUsers: number;
+    balances: Array<{
+      currency: string;
+      availableBalance: string;
+      actualBalance: string;
+      userCount: number;
+    }>;
+  };
 }
 
 export interface PlatformRevenue {
@@ -120,10 +130,11 @@ export const platformService = {
     try {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response: any = await api.get('/platform/balance');
-      // Backend returns: { feeWallet: {...}, hotWallet: {...} }
+      // Backend returns: { feeWallet: {...}, hotWallet: {...}, totalUserFiat: {...} }
       return {
         feeWallet: response.feeWallet || { address: 'Not configured', balances: [], totalUsd: '0' },
         hotWallet: response.hotWallet || { address: 'Not configured', balances: [], totalUsd: '0' },
+        totalUserFiat: response.totalUserFiat || undefined,
       };
     } catch {
       // Return empty balances if endpoint doesn't exist
