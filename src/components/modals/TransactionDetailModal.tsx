@@ -12,6 +12,7 @@ import {
   useApproveTransaction,
   useRejectTransaction,
   useUpdateTxHash,
+  useRetryTransaction,
 } from '@/hooks/useTransactions';
 import {
   Refresh,
@@ -220,6 +221,7 @@ export function TransactionDetailModal({
   const approveMutation = useApproveTransaction();
   const rejectMutation = useRejectTransaction();
   const updateTxHashMutation = useUpdateTxHash();
+  const retryMutation = useRetryTransaction();
 
   // MFA Protection for sensitive actions
   const mfaApprove = useMfaProtectedAction({
@@ -233,6 +235,25 @@ export function TransactionDetailModal({
     actionDescription: 'You are about to reject this transaction. This action requires MFA verification.',
     onSuccess: () => refetch(),
   });
+
+  const mfaRetry = useMfaProtectedAction({
+    actionName: 'Retry Send',
+    actionDescription: 'You are about to retry this transfer. The system will re-attempt to send from the master wallet. This requires MFA verification.',
+    onSuccess: () => refetch(),
+  });
+
+  const handleRetry = async () => {
+    if (!confirm('Retry this transfer? Make sure the master wallet has been funded first.')) return;
+
+    await mfaRetry.executeWithMfa(async () => {
+      const result = await retryMutation.mutateAsync({ id: transactionId });
+      if (result.success) {
+        alert(`Retry successful! TXID: ${result.txid || 'pending'}`);
+      } else {
+        alert(`Retry failed: ${result.message || 'Unknown error'}`);
+      }
+    });
+  };
 
   const handleFlag = () => {
     const reason = prompt('Enter reason for flagging:');
@@ -400,12 +421,27 @@ export function TransactionDetailModal({
                   <button
                     onClick={handleApprove}
                     disabled={approveMutation.isPending || !canVerifyTx}
-                    title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : undefined}
+                    title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : 'Approve with manual TX hash'}
                     className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-green-700 disabled:opacity-50"
                   >
                     <TickSquare size="16" />
                     Approve
                   </button>
+                  {transaction.status === 'PENDING_FUNDING' && (
+                    <button
+                      onClick={handleRetry}
+                      disabled={retryMutation.isPending || !canVerifyTx}
+                      title={!canVerifyTx ? 'You need VERIFY_TRANSACTIONS permission.' : 'Fund master wallet first, then retry auto-send'}
+                      className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-blue-700 disabled:opacity-50"
+                    >
+                      {retryMutation.isPending ? (
+                        <Refresh size="16" className="animate-spin" />
+                      ) : (
+                        <Refresh size="16" />
+                      )}
+                      Retry Send
+                    </button>
+                  )}
                   <button
                     onClick={handleReject}
                     disabled={rejectMutation.isPending || !canVerifyTx}
@@ -696,6 +732,18 @@ export function TransactionDetailModal({
         onVerified={handleMfaVerified}
         actionName={mfaReject.modalConfig.actionName}
         actionDescription={mfaReject.modalConfig.actionDescription}
+      />
+
+      <MfaVerificationModal
+        open={mfaRetry.isMfaModalOpen}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) {
+            mfaRetry.closeMfaModal();
+          }
+        }}
+        onVerified={(token) => mfaRetry.handleMfaVerified(token)}
+        actionName={mfaRetry.modalConfig.actionName}
+        actionDescription={mfaRetry.modalConfig.actionDescription}
       />
     </Dialog>
   );

@@ -142,6 +142,25 @@ export const useRejectTransaction = () => {
 };
 
 /**
+ * Hook to retry a pending_funding transfer (admin funded master, re-attempt send)
+ */
+export const useRetryTransaction = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id }: { id: string }) =>
+      transactionService.retryTransaction(id),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.transactions.detail(id) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.transactions.lists() });
+      queryClient.invalidateQueries({
+        queryKey: [...queryKeys.transactions.all, 'pending-approvals'],
+      });
+    },
+  });
+};
+
+/**
  * Hook to update a transaction's blockchain hash
  */
 export const useUpdateTxHash = () => {

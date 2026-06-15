@@ -166,6 +166,14 @@ export const transactionService = {
   },
 
   /**
+   * Retry a pending_funding transfer (admin funded master wallet, re-attempt send)
+   */
+  retryTransaction: async (id: string): Promise<{ success: boolean; message: string; txid?: string }> => {
+    const response: any = await api.post(`/transactions/${id}/retry`);
+    return response;
+  },
+
+  /**
    * Get transactions requiring approval (large transactions, flagged, etc.)
    */
   getPendingApprovals: async (): Promise<PaginatedResponse<Transaction>> => {
