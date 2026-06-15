@@ -34,6 +34,8 @@ const TABS = [
 const STATUS_COLORS: Record<TransactionStatus, { bg: string; text: string }> = {
   COMPLETED: { bg: 'bg-green-50', text: 'text-green-700' },
   PENDING: { bg: 'bg-yellow-50', text: 'text-yellow-700' },
+  PENDING_FUNDING: { bg: 'bg-red-50', text: 'text-red-700' },
+  PENDING_CONFIRMATION: { bg: 'bg-blue-50', text: 'text-blue-700' },
   PROCESSING: { bg: 'bg-blue-50', text: 'text-blue-700' },
   FAILED: { bg: 'bg-red-50', text: 'text-red-700' },
   CANCELLED: { bg: 'bg-gray-50', text: 'text-gray-700' },

@@ -23,6 +23,8 @@ export type TransactionType =
  */
 export type TransactionStatus =
   | 'PENDING'
+  | 'PENDING_FUNDING'
+  | 'PENDING_CONFIRMATION'
   | 'PROCESSING'
   | 'COMPLETED'
   | 'FAILED'
