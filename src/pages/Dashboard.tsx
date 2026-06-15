@@ -24,16 +24,6 @@ import type { Permission } from '@/types/auth';
 // Helper Functions
 // =============================================================================
 
-const formatCurrency = (amount: string | number, decimals = 2) => {
-  const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  }).format(num);
-};
-
 const formatNaira = (amount: string | number, decimals = 2) => {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
   return new Intl.NumberFormat('en-NG', {
@@ -44,9 +34,9 @@ const formatNaira = (amount: string | number, decimals = 2) => {
   }).format(num);
 };
 
-const formatCurrency = (amount: string | number, currency: string, decimals = 2) => {
+const formatCurrency = (amount: string | number, currency?: string, decimals = 2) => {
   const num = typeof amount === 'string' ? parseFloat(amount) : amount;
-  if (currency === 'USD') {
+  if (!currency || currency === 'USD') {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
