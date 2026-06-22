@@ -525,7 +525,7 @@ export function TransactionDetailModal({
                       <InfoRow
                         icon={<Wallet size="16" color="currentColor" />}
                         label="Fee"
-                        value={`${formatAmount(transaction.fee, transaction.currency)} (${formatUsd(transaction.feeUsd)})`}
+                        value={`${formatAmount(transaction.fee, transaction.feeCurrency || transaction.currency)}${transaction.feeUsd ? ` (${formatUsd(transaction.feeUsd)})` : ''}`}
                       />
                     </div>
 

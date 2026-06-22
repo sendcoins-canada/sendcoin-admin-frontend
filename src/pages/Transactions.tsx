@@ -63,12 +63,20 @@ const formatAmount = (amount: number, currency: string) => {
   }).format(amount) + ' ' + currency;
 };
 
-const formatUsd = (amount: number) => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-  }).format(amount);
+// Formats a native fiat amount with its own currency code. The platform settles
+// in NGN, so we show real fiat values rather than a fabricated USD conversion.
+const formatFiat = (amount: number, currency?: string) => {
+  const code = (currency || 'NGN').toUpperCase();
+  const symbol = code === 'NGN' ? '\u20A6' : '';
+  return (
+    symbol +
+    new Intl.NumberFormat('en-US', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(amount) +
+    (symbol ? '' : ' ' + code)
+  );
 };
 
 const formatDate = (dateString: string) => {
@@ -194,7 +202,6 @@ export default function Transactions() {
               <option value="PROCESSING">Processing</option>
               <option value="FAILED">Failed</option>
               <option value="CANCELLED">Cancelled</option>
-              <option value="FLAGGED">Flagged</option>
             </select>
 
             {/* Currency Filter */}
@@ -240,10 +247,10 @@ export default function Transactions() {
               <div className="w-3 h-3 border border-blue-500 rounded-sm flex items-center justify-center">
                 <div className="w-1.5 h-1.5 bg-blue-500 rounded-sm" />
               </div>
-              Total volume
+              Total volume (NGN)
             </div>
             <div className="text-2xl font-bold">
-              {stats != null ? formatUsd(Number(stats.totalVolumeUsd ?? 0)) : '-'}
+              {stats != null ? formatFiat(Number(stats.totalVolumeUsd ?? 0), 'NGN') : '-'}
             </div>
           </div>
 
@@ -332,9 +339,11 @@ export default function Transactions() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="font-medium">{formatAmount(tx.amount, tx.currency)}</div>
-                      <div className="text-xs text-gray-400">
-                        {formatUsd(tx.amountUsd)}
-                      </div>
+                      {tx.amountFiat != null && (
+                        <div className="text-xs text-gray-400">
+                          {formatFiat(tx.amountFiat, tx.fiatCurrency)}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <div
@@ -383,7 +392,7 @@ export default function Transactions() {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-gray-600 text-xs">
-                      {formatAmount(tx.fee, tx.currency)}
+                      {formatAmount(tx.fee, tx.feeCurrency || tx.currency)}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button className="p-1 hover:bg-gray-100 rounded-full text-gray-400">

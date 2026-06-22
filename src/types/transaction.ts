@@ -98,7 +98,13 @@ export interface Transaction {
   currency: Cryptocurrency;
   amount: number;
   amountUsd: number;
+  // Native fiat value (e.g. NGN) when the transaction has a fiat leg.
+  amountFiat?: number;
+  fiatCurrency?: string;
   fee: number;
+  // Currency the fee is denominated in. For conversions this differs from
+  // `currency` (crypto→fiat fees are in fiat, fiat→crypto fees are in USD).
+  feeCurrency?: string;
   feeUsd: number;
 
   // Endpoints
