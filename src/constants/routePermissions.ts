@@ -14,6 +14,7 @@ export interface RoutePermissionConfig {
 /** Route path -> required permission(s). Used for sidebar visibility and access checks. */
 export const ROUTE_PERMISSIONS: Record<string, RoutePermissionConfig> = {
   '/dashboard': { permission: 'VIEW_DASHBOARD' },
+  '/activity': { permission: 'VIEW_DASHBOARD' },
   '/transactions': { anyOf: ['READ_TRANSACTIONS', 'VERIFY_TRANSACTIONS'] },
   '/users': { anyOf: ['READ_USERS', 'SUSPEND_USERS', 'VERIFY_KYC'] },
   '/team': { permission: 'MANAGE_ADMINS' },

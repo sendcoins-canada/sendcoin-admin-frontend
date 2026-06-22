@@ -84,6 +84,12 @@ export const queryKeys = {
     count: () => ['notifications', 'count'] as const,
   },
 
+  // Activity feed
+  activity: {
+    all: ['activity'] as const,
+    list: (filters?: object) => ['activity', 'list', filters] as const,
+  },
+
   // Audit logs
   auditLogs: {
     all: ['audit-logs'] as const,

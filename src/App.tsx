@@ -32,6 +32,7 @@ import Mail from '@/pages/Mail';
 import Newsletter from '@/pages/Newsletter';
 import Security from '@/pages/Security';
 import Rates from '@/pages/Rates';
+import ActivityFeed from '@/pages/ActivityFeed';
 
 // =============================================================================
 // Route Components with Guards
@@ -120,6 +121,13 @@ const ProtectedRoutes = () => (
       <Route path="/analytics">
         <PermissionGuard permission="VIEW_ANALYTICS">
           <Analytics />
+        </PermissionGuard>
+      </Route>
+
+      {/* Activity Feed - unified platform event stream */}
+      <Route path="/activity">
+        <PermissionGuard permission="VIEW_DASHBOARD">
+          <ActivityFeed />
         </PermissionGuard>
       </Route>
 

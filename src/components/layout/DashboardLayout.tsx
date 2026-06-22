@@ -20,6 +20,7 @@ import {
   Sms,
   DollarCircle,
   DocumentText1,
+  Activity,
 } from 'iconsax-react';
 import { NotificationsDropdown } from '@/components/notifications/NotificationsDropdown';
 import { AppLogo } from '@/components/ui/AppLogo';
@@ -51,7 +52,10 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const userPermissions = useAppSelector(selectPermissions);
 
   const allNavGroups: { groupLabel?: string; items: Array<{ icon: typeof Ghost; path: string; label: string; hasNotification?: boolean }> }[] = [
-    { groupLabel: 'Home', items: [{ icon: Ghost, path: '/dashboard', label: 'Home', hasNotification: true }] },
+    { groupLabel: 'Home', items: [
+      { icon: Ghost, path: '/dashboard', label: 'Home', hasNotification: true },
+      { icon: Activity, path: '/activity', label: 'Activity Feed' },
+    ] },
     {
       groupLabel: 'Operations',
       items: [
