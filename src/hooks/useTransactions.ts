@@ -26,10 +26,12 @@ export const useTransactions = (filters?: TransactionFilters) => {
 /**
  * Hook to get a single transaction by ID
  */
-export const useTransaction = (id: string) => {
+export const useTransaction = (id: string, source?: string) => {
   return useQuery({
-    queryKey: queryKeys.transactions.detail(id),
-    queryFn: () => transactionService.getTransaction(id),
+    // Include source in the key so two ids that collide across source tables
+    // (e.g. conversion_id 19 vs history_id 19) are cached as distinct entries.
+    queryKey: [...queryKeys.transactions.detail(id), source ?? null],
+    queryFn: () => transactionService.getTransaction(id, source),
     enabled: !!id,
   });
 };

@@ -90,6 +90,10 @@ export interface TransactionEndpoint {
  */
 export interface Transaction {
   id: string;
+  // Source table the id originates from (BUY_SELL, WALLET_TRANSFER,
+  // FIAT_TRANSFER, FIAT_CRYPTO_BUY, CRYPTO_FIAT_CONVERSION, ...). Used to
+  // disambiguate the id when fetching detail, since ids collide across sources.
+  transactionCategory?: string;
   txId: string;
   type: TransactionType;
   status: TransactionStatus;
@@ -174,6 +178,8 @@ export interface TransactionHistoryItem {
 export interface TransactionFilters {
   search?: string;
   type?: TransactionType | TransactionType[];
+  /** High-level category filter. 'naira' returns only transactions with a fiat (NGN) leg. */
+  category?: 'naira';
   status?: TransactionStatus | TransactionStatus[];
   currency?: Cryptocurrency | Cryptocurrency[];
   userId?: string;

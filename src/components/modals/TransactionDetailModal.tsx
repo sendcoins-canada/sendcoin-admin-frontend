@@ -43,6 +43,12 @@ import { useHasPermission } from '@/hooks/useAuth';
 
 interface TransactionDetailModalProps {
   transactionId: string;
+  /**
+   * Source category of the clicked row (transactionCategory). Forwarded to the
+   * detail request so the backend resolves the id against the correct table —
+   * ids collide across the 6 merged source tables.
+   */
+  source?: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
@@ -199,6 +205,7 @@ const EndpointCard = ({ title, endpoint }: EndpointCardProps) => (
 
 export function TransactionDetailModal({
   transactionId,
+  source,
   open,
   onOpenChange,
 }: TransactionDetailModalProps) {
@@ -213,7 +220,7 @@ export function TransactionDetailModal({
   const [editHashValue, setEditHashValue] = useState('');
 
   // Fetch transaction data
-  const { data: transaction, isLoading, refetch } = useTransaction(transactionId);
+  const { data: transaction, isLoading, refetch } = useTransaction(transactionId, source);
 
   const canVerifyTx = useHasPermission('VERIFY_TRANSACTIONS');
   const flagMutation = useFlagTransaction();
@@ -371,9 +378,11 @@ export function TransactionDetailModal({
                 <div className="text-3xl font-bold text-gray-900">
                   {formatAmount(transaction.amount, transaction.currency)}
                 </div>
-                <div className="text-sm text-gray-500 mt-1">
-                  {formatUsd(transaction.amountUsd)}
-                </div>
+                {transaction.amountUsd ? (
+                  <div className="text-sm text-gray-500 mt-1">
+                    {formatUsd(transaction.amountUsd)}
+                  </div>
+                ) : null}
               </div>
             </div>
 

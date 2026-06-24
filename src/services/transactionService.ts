@@ -20,6 +20,10 @@ import type { PaginatedResponse } from '../types/common';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapTransaction = (tx: any): Transaction => ({
   id: String(tx.id),
+  // Source table the id belongs to. Sent back as `source` on the detail
+  // request so the backend resolves the id against the correct table and
+  // avoids cross-source id collisions (e.g. conversion_id 19 vs history_id 19).
+  transactionCategory: tx.transactionCategory,
   txId: tx.txId || tx.reference,
   type: tx.type?.toUpperCase() || 'OUTGOING',
   status: tx.status?.toUpperCase() || 'PENDING',
@@ -96,9 +100,14 @@ export const transactionService = {
   /**
    * Get transaction by ID
    */
-  getTransaction: async (id: string): Promise<TransactionDetail> => {
+  getTransaction: async (
+    id: string,
+    source?: string
+  ): Promise<TransactionDetail> => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const response: any = await api.get(`/transactions/${id}`);
+    const response: any = await api.get(`/transactions/${id}`, {
+      params: source ? { source } : undefined,
+    });
     const tx = response.transaction || response;
     return {
       ...mapTransaction(tx),

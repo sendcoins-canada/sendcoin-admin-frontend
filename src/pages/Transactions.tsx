@@ -24,11 +24,17 @@ import type { TransactionType, TransactionStatus, TransactionFilters } from '@/t
 // Constants
 // =============================================================================
 
-const TABS = [
+const TABS: Array<{
+  key: string;
+  label: string;
+  type?: TransactionType;
+  category?: 'naira';
+}> = [
   { key: 'all', label: 'All', type: undefined },
   { key: 'incoming', label: 'Incoming', type: 'INCOMING' as TransactionType },
   { key: 'outgoing', label: 'Outgoing', type: 'OUTGOING' as TransactionType },
   { key: 'conversions', label: 'Conversions', type: 'CONVERSION' as TransactionType },
+  { key: 'naira', label: 'Naira', category: 'naira' },
 ];
 
 const STATUS_COLORS: Record<TransactionStatus, { bg: string; text: string }> = {
@@ -105,17 +111,22 @@ export default function Transactions() {
   const debouncedSearch = useDebounce(searchQuery, 300);
   const [page, setPage] = useState(1);
   const [selectedTransactionId, setSelectedTransactionId] = useState<string | null>(null);
+  // Source table of the selected row, forwarded to the detail modal so its id
+  // resolves against the correct table (ids collide across merged sources).
+  const [selectedTransactionSource, setSelectedTransactionSource] = useState<string | undefined>(undefined);
 
   // Filter states
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [currencyFilter, setCurrencyFilter] = useState<string>('all');
 
   // Build filters based on active tab and search
+  const activeTabConfig = TABS.find(t => t.key === activeTab);
   const filters: TransactionFilters = {
-    ...(activeTab !== 'all' && { type: TABS.find(t => t.key === activeTab)?.type }),
+    ...(activeTabConfig?.type && { type: activeTabConfig.type }),
+    ...(activeTabConfig?.category && { category: activeTabConfig.category }),
     ...(debouncedSearch && { search: debouncedSearch }),
     ...(statusFilter !== 'all' && { status: statusFilter as TransactionStatus }),
-    ...(currencyFilter !== 'all' && { currency: currencyFilter }),
+    ...(currencyFilter !== 'all' && { currency: currencyFilter as TransactionFilters['currency'] }),
   };
 
   // Fetch transactions with React Query
@@ -312,7 +323,10 @@ export default function Transactions() {
                 {transactions.map((tx) => (
                   <tr
                     key={tx.id}
-                    onClick={() => setSelectedTransactionId(tx.id)}
+                    onClick={() => {
+                      setSelectedTransactionId(tx.id);
+                      setSelectedTransactionSource(tx.transactionCategory);
+                    }}
                     className={`hover:bg-gray-50/50 transition-colors cursor-pointer ${
                       tx.isFlagged ? 'bg-orange-50/30' : ''
                     }`}
@@ -441,9 +455,13 @@ export default function Transactions() {
       {selectedTransactionId && (
         <TransactionDetailModal
           transactionId={selectedTransactionId}
+          source={selectedTransactionSource}
           open={!!selectedTransactionId}
           onOpenChange={(open) => {
-            if (!open) setSelectedTransactionId(null);
+            if (!open) {
+              setSelectedTransactionId(null);
+              setSelectedTransactionSource(undefined);
+            }
           }}
         />
       )}

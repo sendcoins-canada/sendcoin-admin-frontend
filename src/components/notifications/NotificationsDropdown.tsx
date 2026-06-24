@@ -29,23 +29,31 @@ import type { NotificationType, NotificationPriority, NotificationCategory } fro
 // Constants
 // =============================================================================
 
+const DEFAULT_TYPE_CONFIG = { icon: <Setting2 size="14" color="currentColor" />, color: 'text-gray-600 bg-gray-100' };
+
 const TYPE_CONFIG: Record<NotificationType, { icon: React.ReactNode; color: string }> = {
-  LOGIN: { icon: <Shield size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100' },
-  SUSPICIOUS_ACTIVITY: { icon: <Warning2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
-  USER_REPORT: { icon: <User size="14" color="currentColor" />, color: 'text-orange-600 bg-orange-100' },
-  LARGE_TRANSACTION: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-purple-600 bg-purple-100' },
-  SYSTEM_ALERT: { icon: <Setting2 size="14" color="currentColor" />, color: 'text-gray-600 bg-gray-100' },
-  KYC_PENDING: { icon: <User size="14" color="currentColor" />, color: 'text-yellow-600 bg-yellow-100' },
+  ADMIN_LOGIN: { icon: <Shield size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100' },
+  ADMIN_LOGIN_FAILED: { icon: <Warning2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
+  ADMIN_PASSWORD_CHANGED: { icon: <Shield size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100' },
+  SUSPICIOUS_LOGIN_ATTEMPT: { icon: <Warning2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
+  NEW_IP_LOGIN: { icon: <Shield size="14" color="currentColor" />, color: 'text-yellow-600 bg-yellow-100' },
+  ADMIN_CREATED: { icon: <User size="14" color="currentColor" />, color: 'text-green-600 bg-green-100' },
+  ADMIN_DEACTIVATED: { icon: <User size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
+  ADMIN_ROLE_CHANGED: { icon: <Shield size="14" color="currentColor" />, color: 'text-indigo-600 bg-indigo-100' },
   TRANSACTION_FLAGGED: { icon: <Warning2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
-  ROLE_CHANGED: { icon: <Shield size="14" color="currentColor" />, color: 'text-indigo-600 bg-indigo-100' },
-  ADMIN_ACTION: { icon: <User size="14" color="currentColor" />, color: 'text-green-600 bg-green-100' },
+  TRANSACTION_APPROVED: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-green-600 bg-green-100' },
+  TRANSACTION_REJECTED: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
+  HIGH_VALUE_TRANSACTION: { icon: <ArrowSwapHorizontal size="14" color="currentColor" />, color: 'text-purple-600 bg-purple-100' },
+  ROLE_CREATED: { icon: <Setting2 size="14" color="currentColor" />, color: 'text-indigo-600 bg-indigo-100' },
+  ROLE_UPDATED: { icon: <Setting2 size="14" color="currentColor" />, color: 'text-blue-600 bg-blue-100' },
+  ROLE_DELETED: { icon: <Setting2 size="14" color="currentColor" />, color: 'text-red-600 bg-red-100' },
 };
 
 const PRIORITY_COLORS: Record<NotificationPriority, string> = {
   LOW: 'bg-gray-100 text-gray-600',
   NORMAL: 'bg-blue-100 text-blue-600',
   HIGH: 'bg-orange-100 text-orange-600',
-  CRITICAL: 'bg-red-100 text-red-600',
+  URGENT: 'bg-red-100 text-red-600',
 };
 
 // =============================================================================
@@ -159,7 +167,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
           ) : (
             <div className="divide-y divide-gray-50">
               {notifications.map((notification) => {
-                const typeConfig = TYPE_CONFIG[notification.type] ?? TYPE_CONFIG.SYSTEM_ALERT;
+                const typeConfig = TYPE_CONFIG[notification.type] ?? DEFAULT_TYPE_CONFIG;
 
                 return (
                   <div
@@ -228,7 +236,7 @@ export function NotificationsDropdown({ className }: NotificationsDropdownProps)
         {/* Footer */}
         <div className="px-4 py-3 border-t border-gray-100">
           <Link
-            href="/notifications"
+            href="/activity"
             onClick={() => setOpen(false)}
             className="block text-center text-sm text-blue-600 font-medium hover:text-blue-700"
           >
