@@ -109,11 +109,6 @@ const formatUsd = (amount: number) => {
   }).format(amount);
 };
 
-const truncateAddress = (address?: string, chars = 10) => {
-  if (!address) return 'N/A';
-  if (address.length <= chars * 2) return address;
-  return `${address.slice(0, chars)}...${address.slice(-chars)}`;
-};
 
 // =============================================================================
 // Info Row Component
@@ -184,8 +179,8 @@ const EndpointCard = ({ title, endpoint }: EndpointCardProps) => (
         {endpoint.type === 'WALLET' ? <Wallet size="18" color="currentColor" /> : <Bank size="18" color="currentColor" />}
       </div>
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-gray-900 truncate">
-          {endpoint.name ?? truncateAddress(endpoint.address) ?? endpoint.bankName ?? 'Unknown'}
+        <div className="text-sm font-medium text-gray-900 break-words">
+          {endpoint.name ?? endpoint.bankName ?? (endpoint.address ? 'Wallet' : 'Unknown')}
         </div>
         <div className="text-xs text-gray-500">
           {endpoint.type === 'WALLET'
@@ -194,6 +189,22 @@ const EndpointCard = ({ title, endpoint }: EndpointCardProps) => (
             ? `****${endpoint.accountNumber.slice(-4)}`
             : 'Bank Account'}
         </div>
+        {endpoint.type === 'WALLET' &&
+          endpoint.address &&
+          endpoint.address !== endpoint.name && (
+            <div className="mt-1 flex items-start gap-1.5">
+              <span className="text-xs font-mono text-gray-700 break-all leading-relaxed">
+                {endpoint.address}
+              </span>
+              <button
+                onClick={() => navigator.clipboard.writeText(endpoint.address!)}
+                className="p-0.5 hover:bg-gray-200 rounded shrink-0"
+                title="Copy address"
+              >
+                <Copy size="12" color="currentColor" className="text-gray-400" />
+              </button>
+            </div>
+          )}
       </div>
     </div>
   </div>
@@ -607,26 +618,29 @@ export function TransactionDetailModal({
                       </div>
                     ) : transaction.txHash ? (
                       <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col gap-1">
                           <span className="text-sm text-gray-500">Transaction Hash</span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-mono text-gray-900">
-                              {truncateAddress(transaction.txHash, 12)}
+                          <div className="flex items-start gap-2">
+                            <span className="text-sm font-mono text-gray-900 break-all min-w-0">
+                              {transaction.txHash}
                             </span>
                             <button
                               onClick={() => navigator.clipboard.writeText(transaction.txHash!)}
-                              className="p-1 hover:bg-gray-200 rounded"
+                              className="p-1 hover:bg-gray-200 rounded shrink-0"
                             >
                               <Copy size="14" color="currentColor" className="text-gray-400" />
                             </button>
-                            <a
-                              href="#"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-1 hover:bg-gray-200 rounded"
-                            >
-                              <Export size="14" color="currentColor" className="text-gray-400" />
-                            </a>
+                            {transaction.explorerUrl && (
+                              <a
+                                href={transaction.explorerUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-1 hover:bg-gray-200 rounded shrink-0"
+                                title="View on block explorer"
+                              >
+                                <Export size="14" color="currentColor" className="text-gray-400" />
+                              </a>
+                            )}
                           </div>
                         </div>
                         {transaction.blockNumber && (
@@ -650,6 +664,22 @@ export function TransactionDetailModal({
                       <div className="text-sm text-gray-400 italic">No blockchain hash recorded</div>
                     )}
                   </div>
+
+                  {/* Failure Reason */}
+                  {transaction.status === 'FAILED' && transaction.failureReason && (
+                    <div className="bg-red-50 border border-red-100 rounded-lg p-4">
+                      <div className="flex items-center gap-2 text-red-700 mb-2">
+                        <CloseSquare size="16" color="currentColor" />
+                        <span className="text-sm font-medium">Failure Reason</span>
+                      </div>
+                      <div className="text-sm text-red-600">{transaction.failureReason}</div>
+                      {transaction.failureCode && (
+                        <div className="text-xs text-red-400 mt-1 font-mono">
+                          Code: {transaction.failureCode}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Flag Info */}
                   {transaction.isFlagged && transaction.flagReason && (

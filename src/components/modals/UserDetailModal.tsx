@@ -533,22 +533,33 @@ export function UserDetailModal({ userId, open, onOpenChange }: UserDetailModalP
                         key={wallet.id}
                         className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
                       >
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm shrink-0">
                             {(wallet.currency || '—').slice(0, 2)}
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <div className="text-sm font-medium text-gray-900">
                               {wallet.currency} ({wallet.network})
                             </div>
-                            <div className="text-xs text-gray-500 font-mono">
-                              {wallet.address
-                                ? `${wallet.address.slice(0, 10)}...${wallet.address.slice(-8)}`
-                                : '—'}
-                            </div>
+                            {wallet.address ? (
+                              <div className="mt-0.5 flex items-start gap-1.5">
+                                <span className="text-xs text-gray-500 font-mono break-all leading-relaxed">
+                                  {wallet.address}
+                                </span>
+                                <button
+                                  onClick={() => navigator.clipboard.writeText(wallet.address!)}
+                                  className="p-0.5 hover:bg-gray-200 rounded shrink-0"
+                                  title="Copy address"
+                                >
+                                  <Copy size="12" color="currentColor" className="text-gray-400" />
+                                </button>
+                              </div>
+                            ) : (
+                              <div className="text-xs text-gray-500 font-mono">—</div>
+                            )}
                           </div>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right shrink-0">
                           <div className="text-sm font-medium text-gray-900">
                             {typeof wallet.balance === 'number' ? wallet.balance.toLocaleString(undefined, { maximumFractionDigits: 8 }) : wallet.balance}
                           </div>

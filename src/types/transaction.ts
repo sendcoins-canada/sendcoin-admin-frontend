@@ -117,6 +117,7 @@ export interface Transaction {
 
   // Blockchain info
   txHash?: string;
+  explorerUrl?: string;
   blockNumber?: number;
   confirmations?: number;
 
@@ -124,6 +125,10 @@ export interface Transaction {
   userId: string;
   userEmail: string;
   userName: string;
+
+  // Failure diagnostics (populated when status = FAILED)
+  failureReason?: string;
+  failureCode?: string;
 
   // Flags
   isFlagged: boolean;

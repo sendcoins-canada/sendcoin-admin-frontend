@@ -47,11 +47,14 @@ const mapTransaction = (tx: any): Transaction => ({
     network: tx.destination?.network || tx.network,
   },
   txHash: tx.txHash,
+  explorerUrl: tx.explorerUrl,
   blockNumber: tx.blockNumber,
   confirmations: tx.confirmations,
   userId: tx.userApiKey || tx.userId || '',
   userEmail: tx.userEmail || '',
   userName: tx.userName || tx.userEmail || tx.userApiKey || '',
+  failureReason: tx.failureReason,
+  failureCode: tx.failureCode,
   isFlagged: tx.isFlagged || false,
   flagReason: tx.flaggedReason,
   flaggedBy: tx.flaggedBy,
@@ -135,7 +138,7 @@ export const transactionService = {
     const flagged = response.flagged || 0;
     // Calculate total from individual counts since backend doesn't provide total
     const total = completed + pending + failed;
-    // totalVolume is an object { crypto, fiat }
+    // totalVolume is an object { crypto, fiat } — kept separate to avoid mixing currencies
     const volumeCrypto = response.totalVolume?.crypto || 0;
     const volumeFiat = response.totalVolume?.fiat || 0;
     return {

@@ -258,11 +258,16 @@ export default function Transactions() {
               <div className="w-3 h-3 border border-blue-500 rounded-sm flex items-center justify-center">
                 <div className="w-1.5 h-1.5 bg-blue-500 rounded-sm" />
               </div>
-              Total volume (NGN)
+              Total volume
             </div>
             <div className="text-2xl font-bold">
               {stats != null ? formatFiat(Number(stats.totalVolumeUsd ?? 0), 'NGN') : '-'}
             </div>
+            {stats != null && Number(stats.totalVolume ?? 0) > 0 && (
+              <div className="text-sm text-gray-500">
+                {Number(stats.totalVolume).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} crypto
+              </div>
+            )}
           </div>
 
           <div className="space-y-1">
@@ -368,6 +373,11 @@ export default function Transactions() {
                         {tx.status}
                         <ArrowDown2 size="10" color="currentColor" />
                       </div>
+                      {tx.status === 'FAILED' && tx.failureReason && (
+                        <div className="text-xs text-red-500 mt-0.5 max-w-[200px] truncate" title={tx.failureReason}>
+                          {tx.failureReason}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-xs">
