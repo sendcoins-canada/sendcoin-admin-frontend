@@ -73,7 +73,7 @@ const formatAmount = (amount: number, currency: string) => {
 // in NGN, so we show real fiat values rather than a fabricated USD conversion.
 const formatFiat = (amount: number, currency?: string) => {
   const code = (currency || 'NGN').toUpperCase();
-  const symbol = code === 'NGN' ? '\u20A6' : '';
+  const symbol = code === 'NGN' ? '\u20A6' : code === 'USD' ? '$' : '';
   return (
     symbol +
     new Intl.NumberFormat('en-US', {
@@ -261,11 +261,11 @@ export default function Transactions() {
               Total volume
             </div>
             <div className="text-2xl font-bold">
-              {stats != null ? formatFiat(Number(stats.totalVolumeUsd ?? 0), 'NGN') : '-'}
+              {stats != null ? formatFiat(Number(stats.totalVolumeUsd ?? 0), 'USD') : '-'}
             </div>
             {stats != null && Number(stats.totalVolume ?? 0) > 0 && (
               <div className="text-sm text-gray-500">
-                {Number(stats.totalVolume).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} crypto
+                {Number(stats.totalVolume).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} BTC
               </div>
             )}
           </div>

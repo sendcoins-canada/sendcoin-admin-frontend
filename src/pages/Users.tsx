@@ -4,6 +4,7 @@ import { useUsers, useUserStats, useExportUsers } from '@/hooks/useUsers';
 import { useHasPermission } from '@/hooks/useAuth';
 import { useDebounce } from '@/hooks/useDebounce';
 import { UserDetailModal } from '@/components/modals/UserDetailModal';
+import { CreditBonusModal } from '@/components/modals/CreditBonusModal';
 import { TableLoader } from '@/components/ui/TableLoader';
 import { TableEmpty } from '@/components/ui/TableEmpty';
 import {
@@ -18,6 +19,7 @@ import {
   SearchNormal1,
   DocumentDownload,
   Warning2,
+  Gift,
 } from 'iconsax-react';
 import { toast } from 'sonner';
 import type { UserStatus, KycStatus, UserFilters } from '@/types/user';
@@ -96,12 +98,18 @@ export default function Users() {
   const [page, setPage] = useState(1);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 
+  // Row selection for bulk "credit bonus" (tracked by email — the identifier the
+  // credit endpoint resolves; api_key isn't in the list data).
+  const [selectedEmails, setSelectedEmails] = useState<Set<string>>(new Set());
+  const [bonusModalOpen, setBonusModalOpen] = useState(false);
+
   // Filter states
   const [kycFilter, setKycFilter] = useState<string>('all');
   const [accountTypeFilter, setAccountTypeFilter] = useState<string>('all');
   const [countryFilter, setCountryFilter] = useState<string>('all');
 
   const canExportUsers = useHasPermission('EXPORT_DATA');
+  const canCreditBonus = useHasPermission('MANAGE_PLATFORM');
 
   // Build filters based on active tab and search
   const filters: UserFilters = {
@@ -140,6 +148,29 @@ export default function Users() {
   const handleExport = () => {
     exportMutation.mutate(filters);
   };
+
+  // ----- Row selection for bulk credit bonus -----
+  const pageEmails = users.map((u) => u.email).filter(Boolean);
+  const allPageSelected =
+    pageEmails.length > 0 && pageEmails.every((e) => selectedEmails.has(e));
+
+  const toggleEmail = (email: string) => {
+    setSelectedEmails((prev) => {
+      const next = new Set(prev);
+      if (next.has(email)) next.delete(email);
+      else next.add(email);
+      return next;
+    });
+  };
+  const toggleAllPage = () => {
+    setSelectedEmails((prev) => {
+      const next = new Set(prev);
+      if (allPageSelected) pageEmails.forEach((e) => next.delete(e));
+      else pageEmails.forEach((e) => next.add(e));
+      return next;
+    });
+  };
+  const clearSelection = () => setSelectedEmails(new Set());
 
   return (
     <DashboardLayout title="Users">
@@ -224,6 +255,23 @@ export default function Users() {
         </div>
 
         <div className="flex items-center gap-2">
+          {canCreditBonus && selectedEmails.size > 0 && (
+            <>
+              <button
+                onClick={() => setBonusModalOpen(true)}
+                className="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-green-700 transition-colors"
+              >
+                <Gift size="16" color="currentColor" variant="Bold" />
+                Credit bonus ({selectedEmails.size})
+              </button>
+              <button
+                onClick={clearSelection}
+                className="px-3 py-2 text-sm text-gray-500 hover:text-gray-700"
+              >
+                Clear
+              </button>
+            </>
+          )}
           <button
             onClick={() => refetch()}
             disabled={isFetching}
@@ -316,6 +364,17 @@ export default function Users() {
           <table className="w-full text-left text-sm">
             <thead className="bg-gray-50/50 text-gray-500 uppercase text-[10px] font-medium tracking-wider border-b border-gray-100">
               <tr>
+                {canCreditBonus && (
+                  <th className="pl-6 pr-2 py-4 w-8">
+                    <input
+                      type="checkbox"
+                      checked={allPageSelected}
+                      onChange={toggleAllPage}
+                      aria-label="Select all on page"
+                      className="rounded border-gray-300 cursor-pointer"
+                    />
+                  </th>
+                )}
                 <th className="px-6 py-4">User ID</th>
                 <th className="px-6 py-4">Name</th>
                 <th className="px-6 py-4">Account Type</th>
@@ -335,6 +394,17 @@ export default function Users() {
                   onClick={() => setSelectedUserId(user.id)}
                   className="hover:bg-gray-50/50 transition-colors cursor-pointer"
                 >
+                  {canCreditBonus && (
+                    <td className="pl-6 pr-2 py-4" onClick={(e) => e.stopPropagation()}>
+                      <input
+                        type="checkbox"
+                        checked={selectedEmails.has(user.email)}
+                        onChange={() => toggleEmail(user.email)}
+                        aria-label={`Select ${user.email}`}
+                        className="rounded border-gray-300 cursor-pointer"
+                      />
+                    </td>
+                  )}
                   <td className="px-6 py-4 font-medium text-gray-900">
                     {user.id.slice(0, 8)}
                   </td>
@@ -437,6 +507,14 @@ export default function Users() {
           }}
         />
       )}
+
+      {/* Bulk credit-bonus modal */}
+      <CreditBonusModal
+        emails={Array.from(selectedEmails)}
+        open={bonusModalOpen}
+        onOpenChange={setBonusModalOpen}
+        onCredited={clearSelection}
+      />
     </DashboardLayout>
   );
 }
