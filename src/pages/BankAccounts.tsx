@@ -29,7 +29,7 @@ function formatBalance(amount: number, currency: string): string {
   }).format(amount) + ' ' + currency;
 }
 
-export default function BankAccounts() {
+export default function BankAccounts({ embedded }: { embedded?: boolean }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [currencyFilter, setCurrencyFilter] = useState('all');
@@ -94,8 +94,8 @@ export default function BankAccounts() {
   const pagination = data?.pagination;
   const hasFilters = debouncedSearch || currencyFilter !== 'all';
 
-  return (
-    <DashboardLayout title="Fiat Accounts">
+  const body = (
+    <>
       <div className="flex items-center justify-between mb-4">
         <div className="flex gap-4 text-sm">
           {stats && (
@@ -268,6 +268,7 @@ export default function BankAccounts() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
+  return embedded ? body : <DashboardLayout title="Fiat Accounts">{body}</DashboardLayout>;
 }

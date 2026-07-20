@@ -9,7 +9,7 @@ import { TableLoader } from '@/components/ui/TableLoader';
 import { TableEmpty } from '@/components/ui/TableEmpty';
 import { useHasPermission } from '@/hooks/useAuth';
 
-export default function Wallets() {
+export default function Wallets({ embedded }: { embedded?: boolean }) {
   const queryClient = useQueryClient();
   const canFreezeWallets = useHasPermission('FREEZE_WALLETS');
   const [searchQuery, setSearchQuery] = useState('');
@@ -118,8 +118,8 @@ export default function Wallets() {
 
   const hasFilters = searchQuery || cryptoFilter !== 'all' || statusFilter !== 'all' || networkFilter !== 'all';
 
-  return (
-    <DashboardLayout title="Wallets">
+  const body = (
+    <>
       {/* Header with stats */}
       <div className="flex items-center justify-between mb-4">
         <p className="text-sm text-gray-500">
@@ -366,6 +366,7 @@ export default function Wallets() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
+  return embedded ? body : <DashboardLayout title="Wallets">{body}</DashboardLayout>;
 }

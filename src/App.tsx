@@ -23,6 +23,7 @@ import ManageTeam from '@/pages/ManageTeam';
 import Users from '@/pages/Users';
 import AuditLogs from '@/pages/AuditLogs';
 import Wallets from '@/pages/Wallets';
+import Accounts from '@/pages/Accounts';
 import KycQueue from '@/pages/KycQueue';
 import Conversions from '@/pages/Conversions';
 import Analytics from '@/pages/Analytics';
@@ -97,7 +98,14 @@ const ProtectedRoutes = () => (
       </Route>
 
 
-      {/* Wallets */}
+      {/* Accounts - merged Wallets + Fiat Accounts */}
+      <Route path="/accounts">
+        <PermissionGuard anyOf={['READ_WALLETS', 'READ_USERS']}>
+          <Accounts />
+        </PermissionGuard>
+      </Route>
+
+      {/* Wallets (deep-link; also a tab in Accounts) */}
       <Route path="/wallets">
         <PermissionGuard permission="READ_WALLETS">
           <Wallets />

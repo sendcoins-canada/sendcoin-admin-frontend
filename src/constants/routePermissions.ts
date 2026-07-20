@@ -20,6 +20,7 @@ export const ROUTE_PERMISSIONS: Record<string, RoutePermissionConfig> = {
   '/users': { anyOf: ['READ_USERS', 'SUSPEND_USERS', 'VERIFY_KYC'] },
   '/team': { permission: 'MANAGE_ADMINS' },
   '/manage-team': { permission: 'MANAGE_ADMINS' },
+  '/accounts': { anyOf: ['READ_WALLETS', 'READ_USERS'] },
   '/wallets': { permission: 'READ_WALLETS' },
   '/kyc': { permission: 'VERIFY_KYC' },
   '/conversions': { anyOf: ['READ_TRANSACTIONS', 'VERIFY_TRANSACTIONS'] },
