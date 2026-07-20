@@ -35,6 +35,8 @@ import Newsletter from '@/pages/Newsletter';
 import Security from '@/pages/Security';
 import Rates from '@/pages/Rates';
 import ActivityFeed from '@/pages/ActivityFeed';
+import Activity from '@/pages/Activity';
+import Communications from '@/pages/Communications';
 
 // =============================================================================
 // Route Components with Guards
@@ -140,10 +142,17 @@ const ProtectedRoutes = () => (
         </PermissionGuard>
       </Route>
 
-      {/* Activity Feed - unified platform event stream */}
+      {/* Activity - merged Activity Feed + Audit Logs */}
       <Route path="/activity">
         <PermissionGuard permission="VIEW_DASHBOARD">
-          <ActivityFeed />
+          <Activity />
+        </PermissionGuard>
+      </Route>
+
+      {/* Communications - merged Mail + Newsletter */}
+      <Route path="/communications">
+        <PermissionGuard anyOf={['VIEW_ANALYTICS', 'MANAGE_ADMINS', 'SEND_EMAILS']}>
+          <Communications />
         </PermissionGuard>
       </Route>
 

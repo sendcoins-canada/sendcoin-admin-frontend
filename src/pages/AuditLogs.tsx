@@ -107,7 +107,7 @@ const getActionColor = (action: string) => {
 // Audit Logs Page Component
 // =============================================================================
 
-export default function AuditLogs() {
+export default function AuditLogs({ embedded }: { embedded?: boolean }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearch = useDebounce(searchQuery, 300);
@@ -150,8 +150,8 @@ export default function AuditLogs() {
     exportMutation.mutate(filters);
   };
 
-  return (
-    <DashboardLayout title="Audit Logs">
+  const body = (
+    <>
       {/* Tabs */}
       <div className="flex items-center justify-between border-b border-gray-100 pb-1 mb-6">
         <div className="flex gap-8">
@@ -359,6 +359,7 @@ export default function AuditLogs() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
+  return embedded ? body : <DashboardLayout title="Audit Logs">{body}</DashboardLayout>;
 }

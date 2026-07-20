@@ -28,6 +28,7 @@ export const ROUTE_PERMISSIONS: Record<string, RoutePermissionConfig> = {
   '/audit-logs': { permission: 'READ_AUDIT_LOGS' },
   '/bank-accounts': { permission: 'READ_USERS' },
   '/merchants': { anyOf: ['READ_USERS', 'VERIFY_KYC'] },
+  '/communications': { anyOf: ['VIEW_ANALYTICS', 'MANAGE_ADMINS', 'SEND_EMAILS'] },
   '/mail': { anyOf: ['VIEW_ANALYTICS', 'MANAGE_ADMINS', 'SEND_EMAILS'] },
   '/settings': { permission: 'MANAGE_ADMINS' },
   '/rates': { permission: 'READ_RATES' },

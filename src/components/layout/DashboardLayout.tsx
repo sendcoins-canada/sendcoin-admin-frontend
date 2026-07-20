@@ -54,7 +54,7 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
   const allNavGroups: { groupLabel?: string; items: Array<{ icon: typeof Ghost; path: string; label: string; hasNotification?: boolean }> }[] = [
     { groupLabel: 'Home', items: [
       { icon: Ghost, path: '/dashboard', label: 'Home', hasNotification: true },
-      { icon: Activity, path: '/activity', label: 'Activity Feed' },
+      { icon: Activity, path: '/activity', label: 'Activity' },
     ] },
     {
       groupLabel: 'Operations',
@@ -72,14 +72,12 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
       ],
     },
     { groupLabel: 'Comms', items: [
-      { icon: Sms, path: '/mail', label: 'Mail' },
-      { icon: DocumentText1, path: '/newsletter', label: 'Newsletter' },
+      { icon: Sms, path: '/communications', label: 'Communications' },
     ] },
     {
       groupLabel: 'Risk & Compliance',
       items: [
         { icon: Chart2, path: '/analytics', label: 'Analytics' },
-        { icon: DocumentText, path: '/audit-logs', label: 'Audit Logs' },
       ],
     },
     {

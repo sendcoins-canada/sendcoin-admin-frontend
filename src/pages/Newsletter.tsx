@@ -282,7 +282,7 @@ function newSection(): Section {
 
 // ─── Main component ──────────────────────────────────────────────────────────
 
-export default function Newsletter() {
+export default function Newsletter({ embedded }: { embedded?: boolean }) {
   const [, navigate] = useLocation();
   const { hasAnyPermission } = usePermissions();
   const canSend = hasAnyPermission(['MANAGE_ADMINS', 'SEND_EMAILS']);
@@ -418,8 +418,8 @@ export default function Newsletter() {
     return map[segment] ?? null;
   })();
 
-  return (
-    <DashboardLayout title="Newsletter">
+  const body = (
+    <>
       <div className="flex flex-col xl:flex-row gap-6">
         {/* ── Left: Compose ── */}
         <div className="flex-1 min-w-0 space-y-4">
@@ -640,6 +640,7 @@ export default function Newsletter() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
+  return embedded ? body : <DashboardLayout title="Newsletter">{body}</DashboardLayout>;
 }

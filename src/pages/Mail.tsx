@@ -17,7 +17,7 @@ import { TableLoader } from '@/components/ui/TableLoader';
 import { TableEmpty } from '@/components/ui/TableEmpty';
 import { usePermissions } from '@/hooks/useAuth';
 
-export default function Mail() {
+export default function Mail({ embedded }: { embedded?: boolean }) {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [viewingId, setViewingId] = useState<number | null>(null);
@@ -78,8 +78,8 @@ export default function Mail() {
       minute: '2-digit',
     });
 
-  return (
-    <DashboardLayout title="Mail">
+  const body = (
+    <>
       {/* Campaigns */}
       {canSendEmail && (
         <div className="mb-8">
@@ -310,6 +310,7 @@ export default function Mail() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+    </>
   );
+  return embedded ? body : <DashboardLayout title="Mail">{body}</DashboardLayout>;
 }

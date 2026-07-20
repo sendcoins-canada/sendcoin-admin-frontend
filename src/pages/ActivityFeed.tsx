@@ -99,7 +99,7 @@ function ActivityRow({ item }: { item: ActivityItem }) {
   );
 }
 
-export default function ActivityFeed() {
+export default function ActivityFeed({ embedded }: { embedded?: boolean }) {
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -127,8 +127,8 @@ export default function ActivityFeed() {
     setPage(1);
   };
 
-  return (
-    <DashboardLayout title="Activity Feed">
+  const body = (
+    <>
       <div className="space-y-6">
         {/* Toolbar */}
         <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -216,6 +216,7 @@ export default function ActivityFeed() {
           </div>
         )}
       </div>
-    </DashboardLayout>
+    </>
   );
+  return embedded ? body : <DashboardLayout title="Activity Feed">{body}</DashboardLayout>;
 }
