@@ -60,7 +60,6 @@ export function DashboardLayout({ children, title }: DashboardLayoutProps) {
       groupLabel: 'Operations',
       items: [
         { icon: Wallet, path: '/transactions', label: 'Transactions' },
-        { icon: Card, path: '/payouts', label: 'Payouts' },
         { icon: ArrowSwapHorizontal, path: '/conversions', label: 'Conversions' },
         { icon: WalletMoney, path: '/wallets', label: 'Wallets' },
         { icon: Card, path: '/bank-accounts', label: 'Fiat Accounts' },

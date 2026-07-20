@@ -16,6 +16,7 @@ export const ROUTE_PERMISSIONS: Record<string, RoutePermissionConfig> = {
   '/dashboard': { permission: 'VIEW_DASHBOARD' },
   '/activity': { permission: 'VIEW_DASHBOARD' },
   '/transactions': { anyOf: ['READ_TRANSACTIONS', 'VERIFY_TRANSACTIONS'] },
+  '/payouts': { anyOf: ['READ_TRANSACTIONS', 'VERIFY_TRANSACTIONS'] },
   '/users': { anyOf: ['READ_USERS', 'SUSPEND_USERS', 'VERIFY_KYC'] },
   '/team': { permission: 'MANAGE_ADMINS' },
   '/manage-team': { permission: 'MANAGE_ADMINS' },

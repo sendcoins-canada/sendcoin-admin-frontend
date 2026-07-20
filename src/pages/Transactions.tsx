@@ -4,6 +4,7 @@ import { useTransactions, useTransactionStats, useExportTransactions } from '@/h
 import { useHasPermission } from '@/hooks/useAuth';
 import { useDebounce } from '@/hooks/useDebounce';
 import { TransactionDetailModal } from '@/components/modals/TransactionDetailModal';
+import PayoutsPanel from '@/components/PayoutsPanel';
 import { TableLoader } from '@/components/ui/TableLoader';
 import { TableEmpty } from '@/components/ui/TableEmpty';
 import {
@@ -35,6 +36,7 @@ const TABS: Array<{
   { key: 'outgoing', label: 'Outgoing', type: 'OUTGOING' as TransactionType },
   { key: 'conversions', label: 'Conversions', type: 'CONVERSION' as TransactionType },
   { key: 'naira', label: 'Naira', category: 'naira' },
+  { key: 'payouts', label: 'Payouts (CrayFi)' },
 ];
 
 const STATUS_COLORS: Record<TransactionStatus, { bg: string; text: string }> = {
@@ -186,6 +188,10 @@ export default function Transactions() {
           </div>
         </div>
 
+        {activeTab === 'payouts' ? (
+          <PayoutsPanel />
+        ) : (
+        <>
         {/* Filters & Actions */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -458,6 +464,8 @@ export default function Transactions() {
               </button>
             </div>
           </div>
+        )}
+        </>
         )}
       </div>
 
