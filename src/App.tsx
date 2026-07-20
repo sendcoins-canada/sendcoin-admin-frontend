@@ -18,6 +18,7 @@ import ConfirmPassword from '@/pages/ConfirmPassword';
 // Protected pages
 import Dashboard from '@/pages/Dashboard';
 import Transactions from '@/pages/Transactions';
+import Payouts from '@/pages/Payouts';
 import ManageTeam from '@/pages/ManageTeam';
 import Users from '@/pages/Users';
 import AuditLogs from '@/pages/AuditLogs';
@@ -107,6 +108,13 @@ const ProtectedRoutes = () => (
       <Route path="/kyc">
         <PermissionGuard permission="VERIFY_KYC">
           <KycQueue />
+        </PermissionGuard>
+      </Route>
+
+      {/* CrayFi Payouts - NGN bank payouts with CrayFi's real outcome */}
+      <Route path="/payouts">
+        <PermissionGuard anyOf={['READ_TRANSACTIONS', 'VERIFY_TRANSACTIONS']}>
+          <Payouts />
         </PermissionGuard>
       </Route>
 
